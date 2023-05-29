@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Cookies from "js-cookie";
 
 function App() {
+  const [token, setToken] = useState(Cookies.get("token") || null);
+  const handleToken = (token) => {
+    if (token) {
+      setToken(token);
+      Cookies.set("token", token, { expires: 7 });
+    } else {
+      setToken(null);
+      Cookies.remove("token");
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Routes>
+          <Route></Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
