@@ -8,6 +8,14 @@ const Home = ({ search }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  const getFilteredData = () => {
+    return data.filter(
+      (event) =>
+        event.name.toLowerCase().includes(search.toLowerCase()) ||
+        event.date.toLowerCase().includes(search.toLowerCase())
+    );
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,11 +32,7 @@ const Home = ({ search }) => {
     fetchData();
   }, [search]);
 
-  const filteredData = data.filter(
-    (event) =>
-      event.name.toLowerCase().includes(search.toLowerCase()) ||
-      event.date.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredData = getFilteredData();
 
   return isLoading ? (
     <Audio

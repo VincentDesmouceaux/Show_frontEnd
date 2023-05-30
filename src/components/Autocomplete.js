@@ -1,49 +1,28 @@
-import ReactAutocomplete from "react-autocomplete";
+import React, { useState } from "react";
+import Select from "react-select";
 
-const Autocomplete = ({ items, value, onChange, onSelect }) => {
-  const filterItems = (searchTerm) => {
-    if (!items) {
-      return [];
-    }
-    return items.filter((item) =>
-      item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-    );
+const Autocomplete = ({ items, onChange, onSelect }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const options = items
+    ? items.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }))
+    : [];
+
+  const handleSelectChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    onSelect(selectedOption);
   };
 
   return (
-    <ReactAutocomplete
-      items={filterItems(value) || []}
-      value={value}
-      onChange={onChange}
-      onSelect={onSelect}
-      open={true}
-      renderInput={(props) => (
-        <input
-          {...props}
-          type="text"
-          className="search-input"
-          placeholder="Recherche des articles"
-        />
-      )}
-      renderItem={(item, isHighlighted) => (
-        <div
-          key={item.id}
-          style={{
-            backgroundColor: isHighlighted ? "lightgray" : "white",
-          }}
-        >
-          {item.name}
-        </div>
-      )}
-      getItemValue={(item) => item.name}
-      menuStyle={{
-        position: "absolute",
-        zIndex: "999",
-        backgroundColor: "white",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxShadow: "0 2px 12px rgba(0, 0, 0, 0.1)",
-      }}
+    <Select
+      options={options}
+      value={selectedOption}
+      onChange={handleSelectChange}
+      placeholder="Recherche des articles"
+      isClearable
     />
   );
 };
