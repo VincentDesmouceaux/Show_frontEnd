@@ -3,8 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
 
-const Home = (search) => {
-  const [data, setData] = useState();
+const Home = ({ search }) => {
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -24,6 +24,12 @@ const Home = (search) => {
     fetchData();
   }, [search]);
 
+  const filteredData = data.filter(
+    (event) =>
+      event.name.toLowerCase().includes(search.toLowerCase()) ||
+      event.date.toLowerCase().includes(search.toLowerCase())
+  );
+
   return isLoading ? (
     <Audio
       height="80"
@@ -31,33 +37,37 @@ const Home = (search) => {
       radius="9"
       color="skyblue"
       ariaLabel="loading"
-      wrapperStyle
-      wrapperClass
+      //   wrapperStyle
+      //   wrapperClass
     />
   ) : (
     <>
-      {data.map((event) => (
-        <div key={event._id}>
-          <img src={event.image.url} alt={event.name} />
-          <p>Name: {event.name}</p>
-          <p>Date: {event.date}</p>
-          <p>Seats:</p>
-          <ul>
-            {Object.entries(event.seats).map(([seatType, seatData]) => (
-              <li key={seatType}>
-                {seatType}: {seatData.quantity} (Price: {seatData.price})
-              </li>
-            ))}
-          </ul>
-          <div>
-            <p>Owner: {event.owner.account.username}</p>
-            <img
-              src={event.owner.account.avatar.secure_url}
-              alt={event.owner.account.username}
-            />
+      {filteredData.length > 0 ? (
+        filteredData.map((event) => (
+          <div key={event._id}>
+            <img src={event.image.url} alt={event.name} />
+            <p>Name: {event.name}</p>
+            <p>Date: {event.date}</p>
+            <p>Seats:</p>
+            <ul>
+              {Object.entries(event.seats).map(([seatType, seatData]) => (
+                <li key={seatType}>
+                  {seatType}: {seatData.quantity} (Price: {seatData.price})
+                </li>
+              ))}
+            </ul>
+            <div>
+              <p>Owner: {event.owner.account.username}</p>
+              <img
+                src={event.owner.account.avatar.secure_url}
+                alt={event.owner.account.username}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No events found.</p>
+      )}
     </>
   );
 };

@@ -3,9 +3,17 @@ import logo from "../img/showpos.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import DateRange from "./DateRange";
+import Autocomplete from "./Autocomplete";
 
-const Header = ({ search, setSearch, token, handleToken }) => {
+const Header = ({ search, setSearch, token, handleToken, data }) => {
   const navigate = useNavigate();
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const handleSearchSelect = (value) => {
+    setSearch(value);
+  };
 
   return (
     <div>
@@ -15,18 +23,15 @@ const Header = ({ search, setSearch, token, handleToken }) => {
         }}
       >
         <img className="header-logo" src={logo} alt="show" />
+      </div>
 
-        <div className="search-container">
-          <input
-            value={search}
-            type="text"
-            className="search-input"
-            placeholder="Recherche des articles"
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-          />
-        </div>
+      <div className="search-container">
+        <Autocomplete
+          items={data}
+          value={search}
+          onChange={handleSearchChange}
+          onSelect={handleSearchSelect}
+        />
       </div>
     </div>
   );
