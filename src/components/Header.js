@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import logo from "../img/showpos.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +15,7 @@ const Header = ({
   token,
   handleToken,
   data,
-  handleSort,
+  setFilteredEvents,
 }) => {
   const [dateRange, setDateRange] = useState({
     startDate: new Date(),
@@ -40,17 +41,22 @@ const Header = ({
     setDateRange(ranges.selection);
   };
 
-  const handleSortClick = () => {
-    handleSort(dateRange);
+  const handleSortClick = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/events`, {
+        params: {
+          startDate: dateRange.startDate.toISOString(),
+          endDate: dateRange.endDate.toISOString(),
+        },
+      });
+      setFilteredEvents(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
-
   return (
     <div>
-      <div
-        onClick={() => {
-          navigate("/");
-        }}
-      >
+      <div onClick={() => navigate("/")}>
         <img className="header-logo" src={logo} alt="show" />
       </div>
 

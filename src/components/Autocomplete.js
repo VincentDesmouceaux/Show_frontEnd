@@ -31,6 +31,12 @@ const Autocomplete = ({ items, onChange, onSelect, value }) => {
       autoFocus
       formatResult={formatResult}
       value={value}
+      resultStringKeyName="name" // Specify the key name for the result string
+      placeholder="Search events" // Add a placeholder to the search input
+      styling={{
+        boxShadow: "0 2px 12px rgba(0, 0, 0, 0.1)",
+        borderRadius: "4px",
+      }}
     />
   );
 };

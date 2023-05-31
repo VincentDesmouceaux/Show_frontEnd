@@ -1,15 +1,10 @@
 import "./App.css";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-
 import axios from "axios";
-
 import Home from "./pages/Home";
-
 import Header from "./components/Header";
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faMagnifyingGlass,
@@ -17,12 +12,15 @@ import {
   faArrowRightToBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+
 library.add(faMagnifyingGlass, faKey, faArrowRightToBracket, faUser);
 
 function App() {
   const [search, setSearch] = useState("");
   const [token, setToken] = useState(Cookies.get("token") || null);
   const [data, setData] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+
   const handleToken = (token) => {
     if (token) {
       setToken(token);
@@ -33,17 +31,10 @@ function App() {
     }
   };
 
-  const handleSort = (startDate, endDate) => {
-    // Implement your sorting logic here based on the selected date range
-    console.log("Sorting events from", startDate, "to", endDate);
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://site--show-backend--5rcbdjs6tgqv.code.run/events`
-        );
+        const response = await axios.get(`http://localhost:3000/events`);
         setData(response.data);
       } catch (error) {
         console.log(error.message);
@@ -62,10 +53,13 @@ function App() {
           token={token}
           handleToken={handleToken}
           data={data}
-          handleSort={handleSort}
-        ></Header>
+          setFilteredEvents={setFilteredEvents}
+        />
         <Routes>
-          <Route path="/" element={<Home search={search} />}></Route>
+          <Route
+            path="/"
+            element={<Home search={search} events={filteredEvents} />}
+          />
         </Routes>
       </Router>
     </div>
