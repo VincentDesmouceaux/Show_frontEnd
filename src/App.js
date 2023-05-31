@@ -33,6 +33,11 @@ function App() {
     }
   };
 
+  const handleSort = (startDate, endDate) => {
+    // Implement your sorting logic here based on the selected date range
+    console.log("Sorting events from", startDate, "to", endDate);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -57,6 +62,7 @@ function App() {
           token={token}
           handleToken={handleToken}
           data={data}
+          handleSort={handleSort}
         ></Header>
         <Routes>
           <Route path="/" element={<Home search={search} />}></Route>

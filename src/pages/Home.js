@@ -6,6 +6,7 @@ import { Audio } from "react-loader-spinner";
 const Home = ({ search }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortedData, setSortedData] = useState([]);
   const navigate = useNavigate();
 
   const getFilteredData = () => {
@@ -35,6 +36,20 @@ const Home = ({ search }) => {
     fetchData();
   }, [search]);
 
+  const handleSort = (range) => {
+    if (range) {
+      const filteredData = getFilteredData();
+      const sorted = filteredData.sort((a, b) => {
+        const aDate = new Date(a.date);
+        const bDate = new Date(b.date);
+        return aDate - bDate;
+      });
+      setSortedData(sorted);
+    } else {
+      setSortedData([]);
+    }
+  };
+
   const filteredData = getFilteredData();
 
   return isLoading ? (
@@ -49,7 +64,30 @@ const Home = ({ search }) => {
     />
   ) : (
     <>
-      {filteredData.length > 0 ? (
+      {sortedData.length > 0 ? (
+        sortedData.map((event) => (
+          <div key={event._id}>
+            <img src={event.image.url} alt={event.name} />
+            <p>Name: {event.name}</p>
+            <p>Date: {event.date}</p>
+            <p>Seats:</p>
+            <ul>
+              {Object.entries(event.seats).map(([seatType, seatData]) => (
+                <li key={seatType}>
+                  {seatType}: {seatData.quantity} (Price: {seatData.price})
+                </li>
+              ))}
+            </ul>
+            <div>
+              <p>Owner: {event.owner.account.username}</p>
+              <img
+                src={event.owner.account.avatar.secure_url}
+                alt={event.owner.account.username}
+              />
+            </div>
+          </div>
+        ))
+      ) : filteredData.length > 0 ? (
         filteredData.map((event) => (
           <div key={event._id}>
             <img src={event.image.url} alt={event.name} />

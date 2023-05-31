@@ -1,11 +1,26 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../img/showpos.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-import DateRange from "./DateRange";
+import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import Autocomplete from "./Autocomplete";
 
-const Header = ({ search, setSearch, token, handleToken, data }) => {
+const Header = ({
+  search,
+  setSearch,
+  token,
+  handleToken,
+  data,
+  handleSort,
+}) => {
+  const [dateRange, setDateRange] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: "selection",
+  });
   const navigate = useNavigate();
 
   const handleSearchChange = (text) => {
@@ -20,6 +35,15 @@ const Header = ({ search, setSearch, token, handleToken, data }) => {
       setSearch("");
     }
   };
+
+  const handleDateChange = (ranges) => {
+    setDateRange(ranges.selection);
+  };
+
+  const handleSortClick = () => {
+    handleSort(dateRange);
+  };
+
   return (
     <div>
       <div
@@ -37,6 +61,13 @@ const Header = ({ search, setSearch, token, handleToken, data }) => {
           onChange={handleSearchChange}
           onSelect={handleSearchSelect}
         />
+      </div>
+
+      <div className="date-range-container">
+        <DateRangePicker ranges={[dateRange]} onChange={handleDateChange} />
+        <button onClick={handleSortClick}>
+          <FontAwesomeIcon icon="arrow-right-to-bracket" />
+        </button>
       </div>
     </div>
   );
