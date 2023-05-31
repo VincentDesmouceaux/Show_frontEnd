@@ -1,28 +1,36 @@
 import React, { useState } from "react";
-import Select from "react-select";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
 
-const Autocomplete = ({ items, onChange, onSelect }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+const Autocomplete = ({ items, onChange, onSelect, value }) => {
+  const [options, setOptions] = useState([]);
 
-  const options = items
-    ? items.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }))
-    : [];
+  const handleOnSearch = (text) => {
+    onChange(text);
 
-  const handleSelectChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
-    onSelect(selectedOption);
+    const filteredOptions = items.filter(
+      (item) =>
+        item.name.toLowerCase().includes(text.toLowerCase()) ||
+        item.date.toLowerCase().includes(text.toLowerCase())
+    );
+    setOptions(filteredOptions);
+  };
+
+  const handleOnSelect = (item) => {
+    onSelect(item);
+  };
+
+  const formatResult = (item) => {
+    return item.name;
   };
 
   return (
-    <Select
-      options={options}
-      value={selectedOption}
-      onChange={handleSelectChange}
-      placeholder="Recherche des articles"
-      isClearable
+    <ReactSearchAutocomplete
+      items={options}
+      onSearch={handleOnSearch}
+      onSelect={handleOnSelect}
+      autoFocus
+      formatResult={formatResult}
+      value={value}
     />
   );
 };

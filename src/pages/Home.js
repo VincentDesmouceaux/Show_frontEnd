@@ -9,6 +9,9 @@ const Home = ({ search }) => {
   const navigate = useNavigate();
 
   const getFilteredData = () => {
+    if (!search) {
+      return data;
+    }
     return data.filter(
       (event) =>
         event.name.toLowerCase().includes(search.toLowerCase()) ||

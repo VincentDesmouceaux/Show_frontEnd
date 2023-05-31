@@ -7,14 +7,14 @@ import Autocomplete from "./Autocomplete";
 
 const Header = ({ search, setSearch, token, handleToken, data }) => {
   const navigate = useNavigate();
-  const handleSearchChange = (event) => {
-    const value = event.target.value;
-    setSearch(value);
+
+  const handleSearchChange = (text) => {
+    setSearch(text);
   };
 
-  const handleSearchSelect = (selectedOption) => {
-    if (selectedOption) {
-      const value = selectedOption.label;
+  const handleSearchSelect = (selectedItem) => {
+    if (selectedItem) {
+      const value = selectedItem.name;
       setSearch(value);
     } else {
       setSearch("");
