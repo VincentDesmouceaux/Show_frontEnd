@@ -57,7 +57,6 @@ function App() {
           token={token}
           handleToken={handleToken}
           data={data}
-          setFilteredEvents={setFilteredEvents}
           setDateRange={setDateRange}
         />
         <Routes>
@@ -68,6 +67,7 @@ function App() {
                 search={search}
                 events={filteredEvents}
                 dateRange={dateRange}
+                setFilteredEvents={setFilteredEvents}
               />
             }
           />

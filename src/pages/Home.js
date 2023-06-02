@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
 
-const Home = ({ search, events, dateRange }) => {
+const Home = ({ search, events, dateRange, setFilteredEvents }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Home = ({ search, events, dateRange }) => {
   const filterEvents = () => {
     if (search || (dateRange.startDate && dateRange.endDate)) {
       const filteredEvents = Array.isArray(data)
-        ? data.filter((event) => {
+        ? events.filter((event) => {
             const eventDate = new Date(event.date);
             const startDate = new Date(dateRange.startDate);
             const endDate = new Date(dateRange.endDate);

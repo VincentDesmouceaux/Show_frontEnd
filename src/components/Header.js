@@ -38,8 +38,8 @@ const Header = ({
     }
   };
 
-  const handleDateChange = (ranges) => {
-    setDateRange(ranges.selection);
+  const handleDateChange = (e) => {
+    setDateRange(e.target.value);
   };
 
   const handleSortClick = async () => {
