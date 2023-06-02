@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import logo from "../img/showpos.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-import { DateRangePicker } from "react-date-range";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
+// import { DateRangePicker } from "react-date-range";
+
+import { Calendar } from "primereact/calendar";
+
 import Autocomplete from "./Autocomplete";
 
 const Header = ({
@@ -54,6 +55,7 @@ const Header = ({
       console.log(error.message);
     }
   };
+
   return (
     <div>
       <div onClick={() => navigate("/")}>
@@ -70,7 +72,12 @@ const Header = ({
       </div>
 
       <div className="date-range-container">
-        <DateRangePicker ranges={[dateRange]} onChange={handleDateChange} />
+        <Calendar
+          value={dateRange}
+          onChange={(e) => setDateRange(e.value)}
+          selectionMode="range"
+          readOnlyInput
+        />
         <button onClick={handleSortClick}>
           <FontAwesomeIcon icon="arrow-right-to-bracket" />
         </button>

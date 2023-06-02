@@ -20,6 +20,10 @@ function App() {
   const [token, setToken] = useState(Cookies.get("token") || null);
   const [data, setData] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [dateRange, setDateRange] = useState({
+    startDate: null,
+    endDate: null,
+  });
 
   const handleToken = (token) => {
     if (token) {
@@ -54,11 +58,18 @@ function App() {
           handleToken={handleToken}
           data={data}
           setFilteredEvents={setFilteredEvents}
+          setDateRange={setDateRange}
         />
         <Routes>
           <Route
             path="/"
-            element={<Home search={search} events={filteredEvents} />}
+            element={
+              <Home
+                search={search}
+                events={filteredEvents}
+                dateRange={dateRange}
+              />
+            }
           />
         </Routes>
       </Router>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
 
-const Home = ({ search, events }) => {
+const Home = ({ search, events, dateRange }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -22,23 +22,33 @@ const Home = ({ search, events }) => {
     fetchData();
   }, []);
 
-  const filteredEvents =
-    events.length > 0
-      ? events
-      : Array.isArray(data)
-      ? data.filter((event) => {
-          const eventDate = new Date(event.date);
-          const startDate = new Date(events.startDate);
-          const endDate = new Date(events.endDate);
+  const filterEvents = () => {
+    if (search || (dateRange.startDate && dateRange.endDate)) {
+      const filteredEvents = Array.isArray(data)
+        ? data.filter((event) => {
+            const eventDate = new Date(event.date);
+            const startDate = new Date(dateRange.startDate);
+            const endDate = new Date(dateRange.endDate);
 
-          return (
-            (event.name.toLowerCase().includes(search.toLowerCase()) ||
-              event.date.toLowerCase().includes(search.toLowerCase())) &&
-            eventDate >= startDate &&
-            eventDate <= endDate
-          );
-        })
-      : [];
+            startDate.setHours(0, 0, 0, 0);
+            endDate.setHours(23, 59, 59, 999);
+
+            const isNameMatch = event.name
+              .toLowerCase()
+              .includes(search.toLowerCase());
+            const isDateMatch = eventDate >= startDate && eventDate <= endDate;
+
+            return (search && isNameMatch) || (!search && isDateMatch);
+          })
+        : [];
+
+      return filteredEvents;
+    }
+
+    return data;
+  };
+
+  const filteredEvents = filterEvents();
 
   return isLoading ? (
     <Audio
