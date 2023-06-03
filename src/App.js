@@ -59,6 +59,7 @@ function App() {
           data={data}
           setFilteredEvents={setFilteredEvents}
           setDateRange={setDateRange}
+          dateRange={dateRange}
         />
 
         <Routes>

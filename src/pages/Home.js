@@ -3,7 +3,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
 
-const Home = ({ search, events, dateRange, setFilteredEvents }) => {
+const Home = ({
+  search,
+  events,
+  dateRange,
+  setFilteredEvents,
+  setDateRange,
+}) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -11,7 +17,16 @@ const Home = ({ search, events, dateRange, setFilteredEvents }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/events`);
+        const startDate = dateRange.startDate
+          ? dateRange.startDate.toISOString().split("T")[0]
+          : "";
+        const endDate = dateRange.endDate
+          ? dateRange.endDate.toISOString().split("T")[0]
+          : "";
+        const response = await axios.get(
+          `http://localhost:3000/events?startDate=${startDate}&endDate=${endDate}`
+        );
+        console.log("Response:", response.data);
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -20,12 +35,12 @@ const Home = ({ search, events, dateRange, setFilteredEvents }) => {
     };
 
     fetchData();
-  }, []);
+  }, [dateRange]);
 
   const filterEvents = () => {
     if (search || (dateRange.startDate && dateRange.endDate)) {
       const filteredEvents = Array.isArray(data)
-        ? events.filter((event) => {
+        ? data.filter((event) => {
             const eventDate = new Date(event.date);
             const startDate = new Date(dateRange.startDate);
             const endDate = new Date(dateRange.endDate);
@@ -45,7 +60,7 @@ const Home = ({ search, events, dateRange, setFilteredEvents }) => {
       return filteredEvents;
     }
 
-    return data;
+    return Array.isArray(data) ? data : [];
   };
 
   const filteredEvents = filterEvents();

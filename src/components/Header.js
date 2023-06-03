@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 // import { DateRangePicker } from "react-date-range";
 
-import CalendarSort from "./CalendarSort";
+// import CalendarSort from "./CalendarSort";
+import CustomCalendar from "./CustomCalendar";
 
 import Autocomplete from "./Autocomplete";
 
@@ -17,12 +18,9 @@ const Header = ({
   handleToken,
   data,
   setFilteredEvents,
+  setDateRange,
+  dateRange,
 }) => {
-  const [dateRange, setDateRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  });
   const navigate = useNavigate();
 
   const handleSearchChange = (text) => {
@@ -40,22 +38,9 @@ const Header = ({
 
   const handleDateChange = (e) => {
     setDateRange({
-      startDate: e.value[0],
-      endDate: e.value[1],
+      startDate: e[0],
+      endDate: e[1],
     });
-  };
-
-  const handleSortClick = async () => {
-    try {
-      const startDate = dateRange.startDate.toISOString().split("T")[0];
-      const endDate = dateRange.endDate.toISOString().split("T")[0];
-      const response = await axios.get("http://localhost:3000/events", {
-        params: { startDate, endDate },
-      });
-      setFilteredEvents(response.data);
-    } catch (error) {
-      console.log(error.message);
-    }
   };
 
   return (
@@ -74,16 +59,10 @@ const Header = ({
       </div>
 
       <div className="date-range-container">
-        <CalendarSort
-          value={dateRange}
+        <CustomCalendar
+          value={[dateRange.startDate, dateRange.endDate]}
           onChange={handleDateChange}
-          selectionMode="range"
-          // readOnlyInput
         />
-
-        <button onClick={handleSortClick}>
-          <FontAwesomeIcon icon="arrow-right-to-bracket" />
-        </button>
       </div>
     </div>
   );
