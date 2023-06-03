@@ -57,8 +57,10 @@ function App() {
           token={token}
           handleToken={handleToken}
           data={data}
+          setFilteredEvents={setFilteredEvents}
           setDateRange={setDateRange}
         />
+
         <Routes>
           <Route
             path="/"

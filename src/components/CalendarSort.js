@@ -12,9 +12,8 @@ const CustomCalendar = () => {
   });
 
   const handleDateChange = (e) => {
-    setDateRange(e.target.value);
+    setDateRange(e.value);
   };
-
   return (
     <Calendar
       value={dateRange}

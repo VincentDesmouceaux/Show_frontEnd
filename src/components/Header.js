@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 // import { DateRangePicker } from "react-date-range";
 
-import Calendar from "./Calendar";
+import CalendarSort from "./CalendarSort";
 
 import Autocomplete from "./Autocomplete";
 
@@ -39,13 +39,16 @@ const Header = ({
   };
 
   const handleDateChange = (e) => {
-    setDateRange(e.target.value);
+    setDateRange({
+      startDate: e.value[0],
+      endDate: e.value[1],
+    });
   };
 
   const handleSortClick = async () => {
     try {
-      const startDate = dateRange.startDate.toISOString();
-      const endDate = dateRange.endDate.toISOString();
+      const startDate = dateRange.startDate.toISOString().split("T")[0];
+      const endDate = dateRange.endDate.toISOString().split("T")[0];
       const response = await axios.get("http://localhost:3000/events", {
         params: { startDate, endDate },
       });
@@ -71,11 +74,11 @@ const Header = ({
       </div>
 
       <div className="date-range-container">
-        <Calendar
+        <CalendarSort
           value={dateRange}
           onChange={handleDateChange}
           selectionMode="range"
-          readOnlyInput
+          // readOnlyInput
         />
 
         <button onClick={handleSortClick}>
