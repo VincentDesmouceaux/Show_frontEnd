@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import logo from "../img/showpos.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-// import { DateRangePicker } from "react-date-range";
 
-// import CalendarSort from "./CalendarSort";
 import CustomCalendar from "./CustomCalendar";
 
 import Autocomplete from "./Autocomplete";
@@ -22,6 +20,9 @@ const Header = ({
   dateRange,
 }) => {
   const navigate = useNavigate();
+
+  const calendarRef = useRef(null);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const handleSearchChange = (text) => {
     setSearch(text);
@@ -41,7 +42,35 @@ const Header = ({
       startDate: e[0],
       endDate: e[1],
     });
+    setShowCalendar(false);
   };
+  const handleCalendarClick = () => {
+    setShowCalendar(!showCalendar);
+  };
+
+  const handleCancel = () => {
+    setDateRange({
+      startDate: null,
+      endDate: null,
+    });
+    setSearch("");
+  };
+
+  const handleClickOutside = (event) => {
+    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+      setShowCalendar(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  const placeholder = showCalendar ? "..." : "Search by dates";
 
   return (
     <div>
@@ -58,12 +87,28 @@ const Header = ({
         />
       </div>
 
-      <div className="date-range-container">
-        <CustomCalendar
-          value={[dateRange.startDate, dateRange.endDate]}
-          onChange={handleDateChange}
+      <div className="date-range-container" ref={calendarRef}>
+        <input
+          type="text"
+          placeholder={placeholder}
+          value={
+            dateRange.startDate && dateRange.endDate
+              ? `${dateRange.startDate.toLocaleDateString()} - ${dateRange.endDate.toLocaleDateString()}`
+              : ""
+          }
+          onClick={handleCalendarClick}
+          readOnly
         />
+        {showCalendar && (
+          <CustomCalendar
+            value={[dateRange.startDate, dateRange.endDate]}
+            onChange={handleDateChange}
+          />
+        )}
       </div>
+      {dateRange.startDate && dateRange.endDate && (
+        <button onClick={handleCancel}>Cancel</button>
+      )}
     </div>
   );
 };
