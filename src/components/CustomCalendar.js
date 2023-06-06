@@ -7,6 +7,7 @@ const CustomCalendar = ({ value, onChange }) => {
 
   const handleDateChange = (date) => {
     setSelectedRange(date);
+    console.log("Selected Range:", date);
   };
 
   const handleApply = () => {
@@ -14,6 +15,7 @@ const CustomCalendar = ({ value, onChange }) => {
   };
 
   const handleCancel = () => {
+    setSelectedRange(value);
     onChange(value);
   };
 

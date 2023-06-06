@@ -44,8 +44,17 @@ const Header = ({
     });
     setShowCalendar(false);
   };
-  const handleCalendarClick = () => {
-    setShowCalendar(!showCalendar);
+  const handleCalendarClick = (event) => {
+    if (!showCalendar) {
+      event.preventDefault();
+      setShowCalendar(true);
+      if (!hasSelectedDates) {
+        setSearch("...");
+      }
+      console.log("Clicked on 'Search by dates'");
+      console.log("showCalendar:", showCalendar);
+      console.log("hasSelectedDates:", hasSelectedDates);
+    }
   };
 
   const handleCancel = () => {
@@ -70,7 +79,15 @@ const Header = ({
     };
   }, []);
 
-  const placeholder = showCalendar ? "..." : "Search by dates";
+  const startDateString = dateRange.startDate
+    ? dateRange.startDate.toLocaleDateString()
+    : "";
+  const endDateString = dateRange.endDate
+    ? dateRange.endDate.toLocaleDateString()
+    : "";
+  const hasSelectedDates = dateRange.startDate && dateRange.endDate;
+  const placeholder =
+    showCalendar && !hasSelectedDates ? "..." : "Search by dates";
 
   return (
     <div>
@@ -92,9 +109,7 @@ const Header = ({
           type="text"
           placeholder={placeholder}
           value={
-            dateRange.startDate && dateRange.endDate
-              ? `${dateRange.startDate.toLocaleDateString()} - ${dateRange.endDate.toLocaleDateString()}`
-              : ""
+            hasSelectedDates ? `${startDateString} - ${endDateString}` : ""
           }
           onClick={handleCalendarClick}
           readOnly

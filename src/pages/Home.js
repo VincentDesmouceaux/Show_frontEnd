@@ -10,10 +10,15 @@ const Home = ({
   setFilteredEvents,
   setDateRange,
 }) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(events);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   if (events) {
+  //     setData(events);
+  //   }
+  // }, [events]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,6 +44,7 @@ const Home = ({
 
   const filterEvents = () => {
     if (search || (dateRange.startDate && dateRange.endDate)) {
+      // Filtrer les événements en fonction de la recherche et de la plage de dates
       const filteredEvents = Array.isArray(data)
         ? data.filter((event) => {
             const eventDate = new Date(event.date);
@@ -60,6 +66,7 @@ const Home = ({
       return filteredEvents;
     }
 
+    // Retourner tous les événements si aucun filtre n'est actif
     return Array.isArray(data) ? data : [];
   };
 

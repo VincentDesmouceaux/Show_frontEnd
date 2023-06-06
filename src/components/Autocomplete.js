@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 
 const Autocomplete = ({ items, onChange, onSelect, value }) => {
   const [options, setOptions] = useState([]);
 
-  const handleOnSearch = (text) => {
-    onChange(text);
-
+  useEffect(() => {
     const filteredOptions = items.filter(
       (item) =>
-        item.name.toLowerCase().includes(text.toLowerCase()) ||
-        item.date.toLowerCase().includes(text.toLowerCase())
+        item.name.toLowerCase().includes(value.toLowerCase()) ||
+        item.date.toLowerCase().includes(value.toLowerCase())
     );
     setOptions(filteredOptions);
+  }, [value, items]);
+
+  const handleOnSearch = (text) => {
+    onChange(text);
   };
 
   const handleOnSelect = (item) => {
