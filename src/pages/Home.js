@@ -10,15 +10,9 @@ const Home = ({
   setFilteredEvents,
   setDateRange,
 }) => {
-  const [data, setData] = useState(events);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (events) {
-  //     setData(events);
-  //   }
-  // }, [events]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,10 +23,10 @@ const Home = ({
           ? dateRange.endDate.toISOString().split("T")[0]
           : "";
         const response = await axios.get(
-          `http://localhost:3000/events?startDate=${startDate}&endDate=${endDate}`
+          `http://localhost:3000/events?startDate=${startDate}&endDate=${endDate}&name=${search}`
         );
         console.log("Response:", response.data);
-        setData(response.data);
+        setFilteredEvents(response.data);
         setIsLoading(false);
       } catch (error) {
         console.log(error.message);
@@ -40,13 +34,12 @@ const Home = ({
     };
 
     fetchData();
-  }, [dateRange]);
+  }, [dateRange, setFilteredEvents, search]);
 
   const filterEvents = () => {
-    if (search || (dateRange.startDate && dateRange.endDate)) {
-      // Filtrer les événements en fonction de la recherche et de la plage de dates
-      const filteredEvents = Array.isArray(data)
-        ? data.filter((event) => {
+    if (dateRange.startDate && dateRange.endDate) {
+      const filteredEvents = Array.isArray(events)
+        ? events.filter((event) => {
             const eventDate = new Date(event.date);
             const startDate = new Date(dateRange.startDate);
             const endDate = new Date(dateRange.endDate);
@@ -54,20 +47,14 @@ const Home = ({
             startDate.setHours(0, 0, 0, 0);
             endDate.setHours(23, 59, 59, 999);
 
-            const isNameMatch = event.name
-              .toLowerCase()
-              .includes(search.toLowerCase());
-            const isDateMatch = eventDate >= startDate && eventDate <= endDate;
-
-            return (search && isNameMatch) || (!search && isDateMatch);
+            return eventDate >= startDate && eventDate <= endDate;
           })
         : [];
 
       return filteredEvents;
     }
 
-    // Retourner tous les événements si aucun filtre n'est actif
-    return Array.isArray(data) ? data : [];
+    return Array.isArray(events) ? events : [];
   };
 
   const filteredEvents = filterEvents();

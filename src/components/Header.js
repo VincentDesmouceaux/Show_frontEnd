@@ -23,6 +23,7 @@ const Header = ({
 
   const calendarRef = useRef(null);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [hasSelectedDates, setHasSelectedDates] = useState(false);
 
   const handleSearchChange = (text) => {
     setSearch(text);
@@ -43,6 +44,7 @@ const Header = ({
       endDate: e[1],
     });
     setShowCalendar(false);
+    setHasSelectedDates(true);
   };
   const handleCalendarClick = (event) => {
     if (!showCalendar) {
@@ -63,6 +65,7 @@ const Header = ({
       endDate: null,
     });
     setSearch("");
+    setHasSelectedDates(false);
   };
 
   const handleClickOutside = (event) => {
@@ -85,7 +88,7 @@ const Header = ({
   const endDateString = dateRange.endDate
     ? dateRange.endDate.toLocaleDateString()
     : "";
-  const hasSelectedDates = dateRange.startDate && dateRange.endDate;
+
   const placeholder =
     showCalendar && !hasSelectedDates ? "..." : "Search by dates";
 
