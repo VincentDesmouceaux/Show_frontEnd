@@ -2,19 +2,46 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-const CustomCalendar = ({ value, onChange }) => {
+const CustomCalendar = ({
+  value,
+  onChange,
+  setSelectedDateString,
+  onClearSelection,
+}) => {
   const [selectedRange, setSelectedRange] = useState(value);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const handleDateChange = (date) => {
     setSelectedRange(date);
-    console.log("Selected Range:", date);
+    setSelectedDate(date[0]);
+
+    console.log("Selected Range:", date[0], "-", date[1]);
   };
 
-  const handleApply = () => {
-    onChange(selectedRange);
+  const handleDayClick = (date) => {
+    if (!selectedDate) {
+      setSelectedDate(date);
+      const startDateString = date.toLocaleDateString();
+      setSelectedDateString(startDateString);
+    } else {
+      const startDateString = selectedDate.toLocaleDateString();
+      const endDateString = date.toLocaleDateString();
+      const selectedDateString = `${startDateString} - ${endDateString}`;
+      setSelectedDateString(selectedDateString);
+      setSelectedRange([selectedDate, date]);
+      onChange([selectedDate, date]);
+    }
+  };
+
+  const handleClearSelection = () => {
+    setSelectedRange(null);
+    setSelectedDate(null);
+    setSelectedDateString("");
   };
 
   const handleCancel = () => {
+    onClearSelection();
+    handleClearSelection();
     setSelectedRange(value);
     onChange(value);
   };
@@ -26,8 +53,9 @@ const CustomCalendar = ({ value, onChange }) => {
         value={selectedRange}
         onChange={handleDateChange}
         formatLongDate={(locale, date) => date.toLocaleDateString()}
+        onClickDay={handleDayClick}
       />
-      <button onClick={handleApply}>Apply</button>
+
       <button onClick={handleCancel}>Cancel</button>
     </div>
   );

@@ -22,8 +22,10 @@ const Header = ({
   const navigate = useNavigate();
 
   const calendarRef = useRef(null);
+
   const [showCalendar, setShowCalendar] = useState(false);
   const [hasSelectedDates, setHasSelectedDates] = useState(false);
+  const [selectedDateString, setSelectedDateString] = useState("");
 
   const handleSearchChange = (text) => {
     setSearch(text);
@@ -45,6 +47,9 @@ const Header = ({
     });
     setShowCalendar(false);
     setHasSelectedDates(true);
+    const startDateString = e[0] ? e[0].toLocaleDateString() : "";
+    const endDateString = e[1] ? e[1].toLocaleDateString() : "";
+    setSelectedDateString(`${startDateString} - ${endDateString}`);
   };
   const handleCalendarClick = (event) => {
     if (!showCalendar) {
@@ -64,6 +69,7 @@ const Header = ({
       startDate: null,
       endDate: null,
     });
+    handleClearSelection();
     setSearch("");
     setHasSelectedDates(false);
   };
@@ -90,7 +96,20 @@ const Header = ({
     : "";
 
   const placeholder =
-    showCalendar && !hasSelectedDates ? "..." : "Search by dates";
+    (!showCalendar && !hasSelectedDates) ||
+    (!showCalendar && !dateRange.startDate)
+      ? "Search by dates"
+      : "...";
+
+  const handleClearSelection = () => {
+    setDateRange({
+      startDate: null,
+      endDate: null,
+    });
+    setHasSelectedDates(false);
+    setSearch("");
+    setSelectedDateString("");
+  };
 
   return (
     <div>
@@ -112,7 +131,9 @@ const Header = ({
           type="text"
           placeholder={placeholder}
           value={
-            hasSelectedDates ? `${startDateString} - ${endDateString}` : ""
+            hasSelectedDates
+              ? `${startDateString} - ${endDateString}`
+              : selectedDateString
           }
           onClick={handleCalendarClick}
           readOnly
@@ -121,6 +142,7 @@ const Header = ({
           <CustomCalendar
             value={[dateRange.startDate, dateRange.endDate]}
             onChange={handleDateChange}
+            setSelectedDateString={setSelectedDateString}
           />
         )}
       </div>
