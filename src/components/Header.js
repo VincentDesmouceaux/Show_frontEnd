@@ -45,22 +45,18 @@ const Header = ({
       startDate: e[0],
       endDate: e[1],
     });
-    setShowCalendar(false);
+
     setHasSelectedDates(true);
     const startDateString = e[0] ? e[0].toLocaleDateString() : "";
     const endDateString = e[1] ? e[1].toLocaleDateString() : "";
     setSelectedDateString(`${startDateString} - ${endDateString}`);
   };
+
   const handleCalendarClick = (event) => {
-    if (!showCalendar) {
-      event.preventDefault();
-      setShowCalendar(true);
-      if (!hasSelectedDates) {
-        setSearch("...");
-      }
-      console.log("Clicked on 'Search by dates'");
-      console.log("showCalendar:", showCalendar);
-      console.log("hasSelectedDates:", hasSelectedDates);
+    event.preventDefault();
+    setShowCalendar(!showCalendar);
+    if (!hasSelectedDates) {
+      setSearch("...");
     }
   };
 
@@ -72,6 +68,7 @@ const Header = ({
     handleClearSelection();
     setSearch("");
     setHasSelectedDates(false);
+    setShowCalendar(false);
   };
 
   const handleClickOutside = (event) => {
@@ -97,7 +94,7 @@ const Header = ({
 
   const placeholder =
     (!showCalendar && !hasSelectedDates) ||
-    (!showCalendar && !dateRange.startDate)
+    (!showCalendar && !dateRange.startDate && !dateRange.endDate)
       ? "Search by dates"
       : "...";
 
@@ -133,7 +130,7 @@ const Header = ({
           value={
             hasSelectedDates
               ? `${startDateString} - ${endDateString}`
-              : selectedDateString
+              : selectedDateString || ""
           }
           onClick={handleCalendarClick}
           readOnly
@@ -143,6 +140,7 @@ const Header = ({
             value={[dateRange.startDate, dateRange.endDate]}
             onChange={handleDateChange}
             setSelectedDateString={setSelectedDateString}
+            onClearSelection={handleCancel}
           />
         )}
       </div>

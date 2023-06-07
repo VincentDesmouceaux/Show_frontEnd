@@ -34,7 +34,7 @@ const CustomCalendar = ({
   };
 
   const handleClearSelection = () => {
-    setSelectedRange(null);
+    setSelectedRange([]);
     setSelectedDate(null);
     setSelectedDateString("");
   };
@@ -56,7 +56,9 @@ const CustomCalendar = ({
         onClickDay={handleDayClick}
       />
 
-      <button onClick={handleCancel}>Cancel</button>
+      {selectedRange.length > 0 && (
+        <button onClick={handleCancel}>Cancel2</button>
+      )}
     </div>
   );
 };
