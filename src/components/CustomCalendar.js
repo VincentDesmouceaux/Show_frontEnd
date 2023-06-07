@@ -33,19 +33,6 @@ const CustomCalendar = ({
     }
   };
 
-  const handleClearSelection = () => {
-    setSelectedRange([]);
-    setSelectedDate(null);
-    setSelectedDateString("");
-  };
-
-  const handleCancel = () => {
-    onClearSelection();
-    handleClearSelection();
-    setSelectedRange(value);
-    onChange(value);
-  };
-
   return (
     <div>
       <Calendar
@@ -55,10 +42,6 @@ const CustomCalendar = ({
         formatLongDate={(locale, date) => date.toLocaleDateString()}
         onClickDay={handleDayClick}
       />
-
-      {selectedRange.length > 0 && (
-        <button onClick={handleCancel}>Cancel2</button>
-      )}
     </div>
   );
 };

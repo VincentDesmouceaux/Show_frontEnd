@@ -26,6 +26,7 @@ const Header = ({
   const [showCalendar, setShowCalendar] = useState(false);
   const [hasSelectedDates, setHasSelectedDates] = useState(false);
   const [selectedDateString, setSelectedDateString] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const handleSearchChange = (text) => {
     setSearch(text);
@@ -69,6 +70,7 @@ const Header = ({
     setSearch("");
     setHasSelectedDates(false);
     setShowCalendar(false);
+    setInputValue("");
   };
 
   const handleClickOutside = (event) => {
@@ -108,6 +110,10 @@ const Header = ({
     setSelectedDateString("");
   };
 
+  const handleHideCalendar = () => {
+    setShowCalendar(false);
+  };
+
   return (
     <div>
       <div onClick={() => navigate("/")}>
@@ -136,12 +142,17 @@ const Header = ({
           readOnly
         />
         {showCalendar && (
-          <CustomCalendar
-            value={[dateRange.startDate, dateRange.endDate]}
-            onChange={handleDateChange}
-            setSelectedDateString={setSelectedDateString}
-            onClearSelection={handleCancel}
-          />
+          <>
+            <CustomCalendar
+              value={[dateRange.startDate, dateRange.endDate]}
+              onChange={handleDateChange}
+              setSelectedDateString={setSelectedDateString}
+              onClearSelection={handleCancel}
+            />
+            {!dateRange.startDate && !dateRange.endDate && (
+              <button onClick={handleHideCalendar}>Hide Calendar</button>
+            )}
+          </>
         )}
       </div>
       {dateRange.startDate && dateRange.endDate && (
