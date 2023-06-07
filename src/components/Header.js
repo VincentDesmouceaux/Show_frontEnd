@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import axios from "axios";
+
 import { Link } from "react-router-dom";
 import logo from "../img/showpos.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +26,6 @@ const Header = ({
   const [showCalendar, setShowCalendar] = useState(false);
   const [hasSelectedDates, setHasSelectedDates] = useState(false);
   const [selectedDateString, setSelectedDateString] = useState("");
-  const [inputValue, setInputValue] = useState("");
 
   const handleSearchChange = (text) => {
     setSearch(text);
@@ -70,7 +69,6 @@ const Header = ({
     setSearch("");
     setHasSelectedDates(false);
     setShowCalendar(false);
-    setInputValue("");
   };
 
   const handleClickOutside = (event) => {
@@ -118,6 +116,11 @@ const Header = ({
     <div>
       <div onClick={() => navigate("/")}>
         <img className="header-logo" src={logo} alt="show" />
+      </div>
+      <div>
+        <FontAwesomeIcon icon="fa-duotone fa-key" />
+        <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
+        <FontAwesomeIcon icon="fa-solid fa-user-large" />
       </div>
 
       <div className="search-container">

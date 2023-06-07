@@ -71,18 +71,11 @@ const Home = ({
     filteredEvents.map((event) => (
       <div key={event._id}>
         <img src={event.image.url} alt={event.name} />
-        <p>Name: {event.name}</p>
-        <p>Date: {event.date}</p>
-        <p>Seats:</p>
-        <ul>
-          {Object.entries(event.seats).map(([seatType, seatData]) => (
-            <li key={seatType}>
-              {seatType}: {seatData.quantity} (Price: {seatData.price})
-            </li>
-          ))}
-        </ul>
+        <p>{event.name}</p>
+        <p>{new Date(event.date).toLocaleDateString()}</p>
+
         <div>
-          <p>Owner: {event.owner.account.username}</p>
+          <p>Promoted by</p>
           <img
             src={event.owner.account.avatar.secure_url}
             alt={event.owner.account.username}

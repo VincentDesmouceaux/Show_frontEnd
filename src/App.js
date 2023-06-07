@@ -9,11 +9,22 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faMagnifyingGlass,
   faKey,
-  faArrowRightToBracket,
+  faRightToBracket,
   faUser,
+  faUserLarge,
+  faTicket,
+  faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faMagnifyingGlass, faKey, faArrowRightToBracket, faUser);
+library.add(
+  faMagnifyingGlass,
+  faKey,
+  faRightToBracket,
+  faUser,
+  faUserLarge,
+  faTicket,
+  faCartShopping
+);
 
 function App() {
   const [search, setSearch] = useState("");
