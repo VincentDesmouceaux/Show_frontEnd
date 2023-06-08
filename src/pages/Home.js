@@ -70,7 +70,9 @@ const Home = ({
   ) : filteredEvents.length > 0 ? (
     filteredEvents.map((event) => (
       <div key={event._id}>
-        <img src={event.image.url} alt={event.name} />
+        <div onClick={() => navigate(`/event/${event._id}`)}>
+          <img src={event.image.url} alt={event.name} />
+        </div>
         <p>{event.name}</p>
         <p>{new Date(event.date).toLocaleDateString()}</p>
 

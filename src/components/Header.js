@@ -73,6 +73,9 @@ const Header = ({
 
   const handleClickOutside = (event) => {
     if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+      if (showCalendar && !hasSelectedDates) {
+        handleHideCalendar();
+      }
       setShowCalendar(false);
     }
   };
@@ -118,7 +121,6 @@ const Header = ({
         <img className="header-logo" src={logo} alt="show" />
       </div>
       <div>
-        <FontAwesomeIcon icon="fa-duotone fa-key" />
         <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
         <FontAwesomeIcon icon="fa-solid fa-user-large" />
       </div>
@@ -145,17 +147,12 @@ const Header = ({
           readOnly
         />
         {showCalendar && (
-          <>
-            <CustomCalendar
-              value={[dateRange.startDate, dateRange.endDate]}
-              onChange={handleDateChange}
-              setSelectedDateString={setSelectedDateString}
-              onClearSelection={handleCancel}
-            />
-            {!dateRange.startDate && !dateRange.endDate && (
-              <button onClick={handleHideCalendar}>Hide Calendar</button>
-            )}
-          </>
+          <CustomCalendar
+            value={[dateRange.startDate, dateRange.endDate]}
+            onChange={handleDateChange}
+            setSelectedDateString={setSelectedDateString}
+            onClearSelection={handleCancel}
+          />
         )}
       </div>
       {dateRange.startDate && dateRange.endDate && (

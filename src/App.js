@@ -3,8 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+
 import Home from "./pages/Home";
+import Event from "./pages/Event";
 import Header from "./components/Header";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faMagnifyingGlass,
@@ -85,6 +88,7 @@ function App() {
               />
             }
           />
+          <Route path="/event/:id" element={<Event />} />
         </Routes>
       </Router>
     </div>
