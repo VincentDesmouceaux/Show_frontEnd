@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../img/showpos.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
 
 import CustomCalendar from "./CustomCalendar";
 
@@ -15,14 +14,12 @@ const Header = ({
   token,
   handleToken,
   data,
-  setFilteredEvents,
   setDateRange,
   dateRange,
+  autocompleteRef,
 }) => {
-  const navigate = useNavigate();
-
   const calendarRef = useRef(null);
-
+  const navigate = useNavigate();
   const [showCalendar, setShowCalendar] = useState(false);
   const [hasSelectedDates, setHasSelectedDates] = useState(false);
   const [selectedDateString, setSelectedDateString] = useState("");
@@ -114,12 +111,18 @@ const Header = ({
   const handleHideCalendar = () => {
     setShowCalendar(false);
   };
-
+  const handleLogoClick = () => {
+    setSearch("");
+    if (autocompleteRef.current) {
+      autocompleteRef.current.setState({ userInput: "" });
+    }
+    navigate("/");
+  };
   return (
     <div>
-      <div onClick={() => navigate("/")}>
+      <Link to="/" onClick={handleLogoClick}>
         <img className="header-logo" src={logo} alt="show" />
-      </div>
+      </Link>
       <div>
         <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
         <FontAwesomeIcon icon="fa-solid fa-user-large" />
@@ -127,6 +130,7 @@ const Header = ({
 
       <div className="search-container">
         <Autocomplete
+          ref={autocompleteRef}
           items={data}
           value={search}
           onChange={handleSearchChange}
@@ -136,6 +140,7 @@ const Header = ({
 
       <div className="date-range-container" ref={calendarRef}>
         <input
+          className="search-by-dates"
           type="text"
           placeholder={placeholder}
           value={

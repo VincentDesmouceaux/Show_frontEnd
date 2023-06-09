@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -38,7 +38,7 @@ function App() {
     startDate: null,
     endDate: null,
   });
-
+  const autocompleteRef = useRef(null);
   const handleToken = (token) => {
     if (token) {
       setToken(token);
@@ -71,9 +71,9 @@ function App() {
           token={token}
           handleToken={handleToken}
           data={data}
-          setFilteredEvents={setFilteredEvents}
           setDateRange={setDateRange}
           dateRange={dateRange}
+          autocompleteRef={autocompleteRef}
         />
 
         <Routes>

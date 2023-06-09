@@ -10,10 +10,15 @@ const Event = () => {
   const { id } = useParams();
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3000/events/" + id);
+      try {
+        const response = await axios.get("http://localhost:3000/events/" + id);
 
-      setData(response.data);
-      setIsLoading(false);
+        setData(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error.message);
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, [id]);
@@ -35,14 +40,14 @@ const Event = () => {
       <div>
         <p>Sieges:</p>
         <div>
-          <p>Type de siège: Orchestre</p>
-          <p>Quantité: {data.seats.orchestre.quantity}</p>
-          <p>Prix: {data.seats.orchestre.price}</p>
+          <p>Orchestre : </p>
+          <p>Places disponibles restantes : {data.seats.orchestre.quantity}</p>
+          <p>Prix : {data.seats.orchestre.price} € </p>
         </div>
         <div>
-          <p>Type de siège: Mezzanine</p>
-          <p>Quantité: {data.seats.mezzanine.quantity}</p>
-          <p>Prix: {data.seats.mezzanine.price}</p>
+          <p>Mezzanine</p>
+          <p>Places disponibles restantes : {data.seats.mezzanine.quantity}</p>
+          <p>Prix: {data.seats.mezzanine.price} €</p>
         </div>
       </div>
 
