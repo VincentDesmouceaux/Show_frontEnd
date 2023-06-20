@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Audio } from "react-loader-spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Event = () => {
   const [data, setData] = useState();
@@ -49,6 +50,7 @@ const Event = () => {
           <p>Places disponibles restantes : {data.seats.mezzanine.quantity}</p>
           <p>Prix: {data.seats.mezzanine.price} €</p>
         </div>
+        <FontAwesomeIcon icon="fa-solid fa-ticket" />
       </div>
 
       <div>
