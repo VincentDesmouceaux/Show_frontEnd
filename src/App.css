@@ -52,6 +52,7 @@ body {
   }
   .date-range-container {
     position: relative;
+    z-index: 1;
   }
   .fa-magnifying-glass {
     position: absolute;
@@ -59,5 +60,10 @@ body {
     left: 26px;
     transform: translateY(-50%);
     font-size: 13px;
+  }
+  .search-container {
+    position: relative;
+
+    z-index: 2;
   }
 }
