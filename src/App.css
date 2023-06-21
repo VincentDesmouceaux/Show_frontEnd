@@ -66,4 +66,17 @@ body {
 
     z-index: 2;
   }
+  .header-upper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .logo-container {
+    text-align: center;
+  }
+
+  .header-logo {
+    width: 200px;
+  }
 }
