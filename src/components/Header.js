@@ -139,6 +139,10 @@ const Header = ({
       </div>
 
       <div className="date-range-container" ref={calendarRef}>
+        <FontAwesomeIcon
+          icon="fa-solid fa-magnifying-glass"
+          className="fa-magnifying-glass"
+        />
         <input
           className="search-by-dates"
           type="text"
