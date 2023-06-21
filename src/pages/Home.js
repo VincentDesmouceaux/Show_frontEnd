@@ -69,20 +69,23 @@ const Home = ({
     />
   ) : filteredEvents.length > 0 ? (
     filteredEvents.map((event) => (
-      <div key={event._id}>
+      <div key={event._id} className="event">
+        <p>{event.name}</p>
         <div
           className="event-image-container"
           onClick={() => navigate(`/event/${event._id}`)}
         >
           <img className="event-image" src={event.image.url} alt={event.name} />
         </div>
-        <p>{event.name}</p>
+
         <p>{new Date(event.date).toLocaleDateString()}</p>
 
         <div>
-          <p>Promoted by</p>
           <div className="promoted-by-container">
+            <p>Promoted by</p>
+
             <img
+              className="img-avatar"
               src={event.owner.account.avatar.secure_url}
               alt={event.owner.account.username}
             />

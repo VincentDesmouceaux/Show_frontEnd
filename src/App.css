@@ -85,22 +85,28 @@ body {
     max-height: 400px;
     object-fit: cover;
   }
+
   .event-image-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
+
   .promoted-by-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .promoted-by-container p {
+    margin-right: 0.5rem;
+  }
+  .img-avatar {
     width: 50px; /* Ajustez la taille en fonction de vos préférences */
     height: 50px; /* Ajustez la taille en fonction de vos préférences */
     border-radius: 50%; /* Pour rendre l'image arrondie */
     overflow: hidden; /* Pour masquer toute partie de l'image qui dépasse la taille définie */
-  }
-
-  .promoted-by-container img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
   }
 }
