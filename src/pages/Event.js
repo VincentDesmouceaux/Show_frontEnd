@@ -34,33 +34,49 @@ const Event = () => {
     />
   ) : (
     <div className="eventid-container">
-      <img className="eventid-image" src={data.image.url} alt={data.name} />
-      <p>{data.name}</p>
+      <div className="title-container">
+        <p className="event-title">{data.name}</p>
+      </div>
+      <div className="image-details-container">
+        <img className="eventid-image" src={data.image.url} alt={data.name} />
+        <div className="details-container">
+          <div>
+            <p>Sieges:</p>
+            <div>
+              <p>Orchestre : </p>
+              <p>
+                Places disponibles restantes : {data.seats.orchestre.quantity}
+              </p>
+              <p>Prix : {data.seats.orchestre.price} € </p>
+            </div>
+            <div>
+              <p>Mezzanine</p>
+              <p>
+                Places disponibles restantes : {data.seats.mezzanine.quantity}
+              </p>
+              <p>Prix: {data.seats.mezzanine.price} €</p>
+            </div>
+            <div className="reservation-container">
+              <p>RESERVER</p>
+              <FontAwesomeIcon
+                icon="fa-solid fa-ticket"
+                className="ticket-icon"
+              />
+            </div>
+          </div>
+
+          <div className="promoted-by-containerid">
+            <p>Promoted by</p>
+            <img
+              className="avatarevent"
+              src={data.owner.account.avatar.secure_url}
+              alt={data.owner.account.username}
+            />
+          </div>
+        </div>
+      </div>
+
       <p>{new Date(data.date).toLocaleDateString()}</p>
-
-      <div>
-        <p>Sieges:</p>
-        <div>
-          <p>Orchestre : </p>
-          <p>Places disponibles restantes : {data.seats.orchestre.quantity}</p>
-          <p>Prix : {data.seats.orchestre.price} € </p>
-        </div>
-        <div>
-          <p>Mezzanine</p>
-          <p>Places disponibles restantes : {data.seats.mezzanine.quantity}</p>
-          <p>Prix: {data.seats.mezzanine.price} €</p>
-        </div>
-        <FontAwesomeIcon icon="fa-solid fa-ticket" />
-      </div>
-
-      <div>
-        <p>Promoted by</p>
-        <img
-          src={data.owner.account.avatar.secure_url}
-          alt={data.owner.account.username}
-        />
-        <p>{data.owner.account.username}</p>
-      </div>
     </div>
   );
 };
