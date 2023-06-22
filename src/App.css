@@ -91,6 +91,10 @@ body {
     height: 32px; /* Ajuster la hauteur des icônes */
     width: 32px; /* Ajuster la largeur des icônes */
   }
+  .header-icons > *:hover {
+    opacity: 0.8; /* Rend les icônes moins opaques lors du survol */
+    cursor: pointer;
+  }
   .logo-container {
     flex-grow: 1;
     display: flex;
@@ -179,5 +183,11 @@ body {
   }
   .event .promoted-by {
     font-size: 12px; /* Modifier la taille de "Promoted by" */
+  }
+  .eventid-image {
+    display: block; /* Permet de centrer l'image horizontalement */
+    margin: 0 auto; /* Centre l'image horizontalement en utilisant les marges automatiques */
+    max-width: 100%; /* Empêche l'image de dépasser sa largeur maximale */
+    height: auto; /* Permet à l'image de conserver son ratio d'aspect */
   }
 }

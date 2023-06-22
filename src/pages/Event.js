@@ -34,7 +34,7 @@ const Event = () => {
     />
   ) : (
     <div>
-      <img src={data.image.url} alt={data.name} />
+      <img className="eventid-image" src={data.image.url} alt={data.name} />
       <p>{data.name}</p>
       <p>{new Date(data.date).toLocaleDateString()}</p>
 
