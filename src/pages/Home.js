@@ -78,11 +78,13 @@ const Home = ({
           <img className="event-image" src={event.image.url} alt={event.name} />
         </div>
 
-        <p>{new Date(event.date).toLocaleDateString()}</p>
+        <p className="event-date">
+          {new Date(event.date).toLocaleDateString()}
+        </p>
 
         <div>
           <div className="promoted-by-container">
-            <p>Promoted by</p>
+            <p className="promoted-by">Promoted by</p>
 
             <img
               className="img-avatar"

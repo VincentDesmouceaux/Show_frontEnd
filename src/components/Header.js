@@ -122,13 +122,17 @@ const Header = ({
     <div className="header-container">
       <div className="header-upper">
         <div className="logo-container">
-          <Link to="/" onClick={handleLogoClick}>
-            <img className="header-logo" src={logo} alt="show" />
-          </Link>
+          <div className="center-logo">
+            <Link to="/" onClick={handleLogoClick}>
+              <img className="header-logo" src={logo} alt="show" />
+            </Link>
+          </div>
         </div>
-        <div className="header-icons">
-          <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
-          <FontAwesomeIcon icon="fa-solid fa-user-large" />
+        <div className="header-icons-container">
+          <div className="header-icons">
+            <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
+            <FontAwesomeIcon icon="fa-solid fa-user-large" />
+          </div>
         </div>
       </div>
 

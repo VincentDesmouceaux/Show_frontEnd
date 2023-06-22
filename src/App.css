@@ -30,6 +30,7 @@ body {
     font-size: 16px;
     color: #333;
     outline: none;
+    cursor: pointer; /* Ajout de la propriété cursor */
   }
 
   .search-by-dates::placeholder,
@@ -60,6 +61,7 @@ body {
     left: 26px;
     transform: translateY(-50%);
     font-size: 13px;
+    color: #999;
   }
   .search-container {
     position: relative;
@@ -68,16 +70,42 @@ body {
   }
   .header-upper {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: space-between;
     width: 100%;
   }
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 24px; /* Augmenter la taille des icônes */
+    margin-right: 10px;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+  .header-icons-container {
+    width: 0; /* Ajustez la largeur selon vos besoins */
+  }
+
+  .header-icons > * {
+    height: 32px; /* Ajuster la hauteur des icônes */
+    width: 32px; /* Ajuster la largeur des icônes */
+  }
   .logo-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .center-logo {
     text-align: center;
   }
 
   .header-logo {
     width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
   }
   .event-image {
     width: 100%;
@@ -91,12 +119,36 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .event-image-container:hover {
+    cursor: pointer;
+  }
+
+  .event-image-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .event-image-container:hover::before {
+    opacity: 1;
   }
 
   .promoted-by-container {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .promoted-by-container p {
@@ -108,5 +160,24 @@ body {
     border-radius: 50%; /* Pour rendre l'image arrondie */
     overflow: hidden; /* Pour masquer toute partie de l'image qui dépasse la taille définie */
     object-fit: cover;
+  }
+  .event {
+    text-align: center;
+  }
+
+  .event p {
+    text-align: center;
+    font-size: 24px; /* Modifier la taille de la police selon vos préférences */
+    text-transform: uppercase; /* Mettre le texte en lettres capitales */
+    margin-bottom: 10px; /* Ajouter de l'espace en bas du titre */
+  }
+  .event p:last-child {
+    margin-bottom: 0;
+  }
+  .event .event-date {
+    font-size: 15px; /* Modifier la taille de la date */
+  }
+  .event .promoted-by {
+    font-size: 12px; /* Modifier la taille de "Promoted by" */
   }
 }
