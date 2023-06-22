@@ -33,7 +33,7 @@ const Event = () => {
       ariaLabel="loading"
     />
   ) : (
-    <div>
+    <div className="eventid-container">
       <img className="eventid-image" src={data.image.url} alt={data.name} />
       <p>{data.name}</p>
       <p>{new Date(data.date).toLocaleDateString()}</p>

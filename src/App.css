@@ -190,4 +190,8 @@ body {
     max-width: 100%; /* Empêche l'image de dépasser sa largeur maximale */
     height: auto; /* Permet à l'image de conserver son ratio d'aspect */
   }
+  .eventid-container {
+    display: flex; /* Utilise la mise en page flexible */
+    align-items: center; /* Centre les éléments verticalement */
+  }
 }
