@@ -5,9 +5,11 @@ import axios from "axios";
 import { Audio } from "react-loader-spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Event = () => {
+const Event = ({ isLoggedIn }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [showLoginMessage, setShowLoginMessage] = useState(false);
+
   const { id } = useParams();
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +25,14 @@ const Event = () => {
     };
     fetchData();
   }, [id]);
+
+  const handleReservationClick = () => {
+    if (!isLoggedIn) {
+      setShowLoginMessage(true);
+    } else {
+      // Ajoutez ici la logique de réservation
+    }
+  };
 
   return isLoading ? (
     <Audio
@@ -56,12 +66,21 @@ const Event = () => {
               </p>
               <p>Prix: {data.seats.mezzanine.price} €</p>
             </div>
+
             <div className="reservation-container">
-              <p>RESERVER</p>
-              <FontAwesomeIcon
-                icon="fa-solid fa-ticket"
-                className="ticket-icon"
-              />
+              <div>
+                <p>RESERVER</p>
+                <FontAwesomeIcon
+                  icon="fa-solid fa-ticket"
+                  className="ticket-icon"
+                  onClick={handleReservationClick}
+                />
+              </div>
+              {!isLoggedIn && showLoginMessage && (
+                <div className="login-message">
+                  <p>Se connecter ou créer son compte</p>
+                </div>
+              )}
             </div>
           </div>
 

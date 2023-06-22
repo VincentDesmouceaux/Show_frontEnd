@@ -32,6 +32,7 @@ library.add(
 function App() {
   const [search, setSearch] = useState("");
   const [token, setToken] = useState(Cookies.get("token") || null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [data, setData] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [dateRange, setDateRange] = useState({
@@ -43,9 +44,11 @@ function App() {
     if (token) {
       setToken(token);
       Cookies.set("token", token, { expires: 7 });
+      setIsLoggedIn(true);
     } else {
       setToken(null);
       Cookies.remove("token");
+      setIsLoggedIn(false);
     }
   };
 
@@ -88,7 +91,10 @@ function App() {
               />
             }
           />
-          <Route path="/event/:id" element={<Event />} />
+          <Route
+            path="/event/:id"
+            element={<Event isLoggedIn={isLoggedIn} />}
+          />
         </Routes>
       </Router>
     </div>

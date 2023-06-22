@@ -7,6 +7,9 @@ body {
   font-family: "Manrope", sans-serif;
   font-size: medium;
 }
+.login-message {
+  color: red;
+}
 
 /* CSS for mobile devices */
 @media (max-width: 768px) {
@@ -251,9 +254,14 @@ body {
     color: red; /* Couleur de l'icône au survol */
   }
   .reservation-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 10px;
     align-items: center;
-    gap: 10px;
+  }
+
+  .login-message {
+    grid-column: 1;
   }
 
   .reservation-container p {
