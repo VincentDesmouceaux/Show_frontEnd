@@ -1,38 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-const PromoterLogin = (token) => {
+const PromoterLogin = ({ token }) => {
+  console.log(token);
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchPromoterProfile = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/promoter/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setIsLoading(false);
+      setUserData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, [token]);
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        // Effectuez ici l'appel API pour récupérer les informations de l'utilisateur connecté
-        // Utilisez le token d'authentification ou toute autre méthode d'identification appropriée
-        const response = await axios.get(
-          "http://localhost:3000/promoter/user",
-          {
-            // Ajoutez les en-têtes d'authentification appropriés, par exemple :
-            headers: {
-              Authorization: `Bearer ${token}`, // Remplacez "token" par votre variable de token
-            },
-          }
-        );
-
-        // Mettez à jour l'état avec les données de l'utilisateur
-        setUserData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
-        // Gérez les erreurs ici
-        // Par exemple, affichez un message d'erreur à l'utilisateur
-        setIsLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []); // Assurez-vous de passer les dépendances appropriées si nécessaire
+    if (token) {
+      fetchPromoterProfile();
+    }
+  }, [token, fetchPromoterProfile]);
 
   return (
     <div>
@@ -40,9 +36,8 @@ const PromoterLogin = (token) => {
         <p>Loading...</p>
       ) : userData ? (
         <div>
-          <img src={userData.photo} alt="User" />
-          <h1>{userData.name}</h1>
-          {/* Affichez d'autres éléments d'information de l'utilisateur ici */}
+          <img src={userData.account.avatar.secure_url} alt="User" />
+          <h1>{userData.account.username}</h1>
         </div>
       ) : (
         <p>No user data available.</p>

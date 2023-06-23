@@ -13,6 +13,7 @@ const Header = ({
   search,
   setSearch,
   token,
+  setToken,
   handleToken,
   data,
   setDateRange,
@@ -145,6 +146,7 @@ const Header = ({
       // En utilisant la fonction handleToken fournie dans les props du composant Header
       handleToken(response.data.token);
       setIsLoggedIn(true);
+      setToken(response.data.token);
 
       console.log("Utilisateur connecté :", response.data.token);
 

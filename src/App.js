@@ -83,6 +83,7 @@ function App() {
         <Header
           search={search}
           setSearch={setSearch}
+          setToken={setToken}
           token={token}
           handleToken={handleToken}
           data={data}
@@ -109,7 +110,7 @@ function App() {
             path="/event/:id"
             element={<Event isLoggedIn={isLoggedIn} />}
           />
-          <Route path="/promoter/signup" element={<PromoterSignUp />} />
+          {/* <Route path="/promoter/signup" element={<PromoterSignUp />} /> */}
           <Route
             path="/promoter/login"
             element={<PromoterLogin token={token} />}
