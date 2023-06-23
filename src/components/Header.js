@@ -59,6 +59,9 @@ const Header = ({
       setSearch("...");
     }
   };
+  const handleHideCalendar = () => {
+    setShowCalendar(false);
+  };
 
   const handleCancel = () => {
     setDateRange({
@@ -86,7 +89,7 @@ const Header = ({
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  });
 
   const startDateString = dateRange.startDate
     ? dateRange.startDate.toLocaleDateString()
@@ -111,9 +114,6 @@ const Header = ({
     setSelectedDateString("");
   };
 
-  const handleHideCalendar = () => {
-    setShowCalendar(false);
-  };
   const handleLogoClick = () => {
     setSearch("");
     if (autocompleteRef.current) {
@@ -157,7 +157,7 @@ const Header = ({
     return () => {
       document.removeEventListener("click", handleClickOutsideModal);
     };
-  }, []);
+  });
 
   return (
     <div className="header-container">
@@ -221,33 +221,37 @@ const Header = ({
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>Promoter login</h2>
+            <h2 className="modal-title">Promoter login</h2>
+            <button className="modal-close" onClick={handleModalClose}>
+              X
+            </button>
             <form onSubmit={handleFormSubmit}>
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <button type="submit">Login</button>
+              <div className="form-group">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="password"
+                  placeholder="Mot de passe"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className="btn-login">
+                Se connecter
+              </button>
             </form>
-            <p>
+            <p className="submodal">
               Si vous voulez créer un événement et que vous n'avez pas encore de
               compte, inscrivez-vous ici.
             </p>
-            <button className="modal-close" onClick={handleModalClose}>
-              Close
-            </button>
           </div>
         </div>
       )}
