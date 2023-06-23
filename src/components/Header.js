@@ -23,6 +23,9 @@ const Header = ({
   const [showCalendar, setShowCalendar] = useState(false);
   const [hasSelectedDates, setHasSelectedDates] = useState(false);
   const [selectedDateString, setSelectedDateString] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSearchChange = (text) => {
     setSearch(text);
@@ -118,6 +121,44 @@ const Header = ({
     }
     navigate("/");
   };
+
+  // MODAL
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    // Effectuez les actions nécessaires avec les valeurs email et password
+    // par exemple, vous pouvez les afficher dans la console pour le moment
+    console.log("Email:", email);
+    console.log("Password:", password);
+
+    handleModalClose();
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setEmail("");
+    setPassword("");
+  };
+
+  const handleClickOutsideModal = (event) => {
+    if (event.target.classList.contains("modal-overlay")) {
+      handleModalClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutsideModal);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutsideModal);
+    };
+  }, []);
+
   return (
     <div className="header-container">
       <div className="header-upper">
@@ -130,7 +171,10 @@ const Header = ({
         </div>
         <div className="header-icons-container">
           <div className="header-icons">
-            <FontAwesomeIcon icon="fa-solid fa-user-gear" />
+            <FontAwesomeIcon
+              icon="fa-solid fa-user-gear"
+              onClick={handleModalOpen}
+            />
             <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
             <FontAwesomeIcon icon="fa-solid fa-user-large" />
           </div>
@@ -173,6 +217,41 @@ const Header = ({
           />
         )}
       </div>
+
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Promoter login</h2>
+            <form onSubmit={handleFormSubmit}>
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button type="submit">Login</button>
+            </form>
+            <p>
+              Si vous voulez créer un événement et que vous n'avez pas encore de
+              compte, inscrivez-vous ici.
+            </p>
+            <button className="modal-close" onClick={handleModalClose}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       {dateRange.startDate && dateRange.endDate && (
         <button onClick={handleCancel}>Cancel</button>
       )}

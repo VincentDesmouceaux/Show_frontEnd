@@ -6,6 +6,8 @@ import axios from "axios";
 
 import Home from "./pages/Home";
 import Event from "./pages/Event";
+import PromoterLogin from "./pages/Promoterlogin";
+import PromoterSignUp from "./pages/Promotersingup";
 import Header from "./components/Header";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -97,6 +99,8 @@ function App() {
             path="/event/:id"
             element={<Event isLoggedIn={isLoggedIn} />}
           />
+          <Route path="/promoter/signup" element={<PromoterSignUp />} />
+          <Route path="/promoter/login" element={<PromoterLogin />} />
         </Routes>
       </Router>
     </div>
