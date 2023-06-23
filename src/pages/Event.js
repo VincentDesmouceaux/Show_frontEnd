@@ -68,13 +68,17 @@ const Event = ({ isLoggedIn }) => {
             </div>
 
             <div className="reservation-container">
-              <div>
-                <p>RESERVER</p>
-                <FontAwesomeIcon
-                  icon="fa-solid fa-ticket"
-                  className="ticket-icon"
-                  onClick={handleReservationClick}
-                />
+              <div className="reservation-icon-container">
+                <div className="reservation-button">
+                  <p>RESERVER</p>
+                </div>
+                <div className="icon-container">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-ticket"
+                    className="ticket-icon"
+                    onClick={handleReservationClick}
+                  />
+                </div>
               </div>
               {!isLoggedIn && showLoginMessage && (
                 <div className="login-message">

@@ -17,6 +17,7 @@ import {
   faUserLarge,
   faTicket,
   faCartShopping,
+  faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -26,7 +27,8 @@ library.add(
   faUser,
   faUserLarge,
   faTicket,
-  faCartShopping
+  faCartShopping,
+  faUserGear
 );
 
 function App() {

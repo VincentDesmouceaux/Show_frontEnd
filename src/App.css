@@ -216,7 +216,7 @@ body {
   }
 
   .title-container {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
   .event-title {
     font-size: 18px;
@@ -250,14 +250,24 @@ body {
     color: black; /* Couleur de l'icône par défaut */
     cursor: pointer; /* Changer le curseur au survol */
   }
+
+  .icon-container {
+    margin-left: 10px;
+  }
+
   .ticket-icon:hover {
     color: red; /* Couleur de l'icône au survol */
   }
   .reservation-container {
-    display: grid;
-    grid-template-columns: auto;
-    grid-gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reservation-icon-container {
+    display: flex;
     align-items: center;
+    margin-bottom: 10px;
   }
 
   .login-message {
@@ -266,5 +276,8 @@ body {
 
   .reservation-container p {
     font-weight: bold;
+  }
+  .reservation-button {
+    margin-right: 10px;
   }
 }

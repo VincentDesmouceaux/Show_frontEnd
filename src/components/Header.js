@@ -130,6 +130,7 @@ const Header = ({
         </div>
         <div className="header-icons-container">
           <div className="header-icons">
+            <FontAwesomeIcon icon="fa-solid fa-user-gear" />
             <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
             <FontAwesomeIcon icon="fa-solid fa-user-large" />
           </div>
