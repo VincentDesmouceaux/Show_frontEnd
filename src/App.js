@@ -110,7 +110,10 @@ function App() {
             element={<Event isLoggedIn={isLoggedIn} />}
           />
           <Route path="/promoter/signup" element={<PromoterSignUp />} />
-          <Route path="/promoter/login" element={<PromoterLogin />} />
+          <Route
+            path="/promoter/login"
+            element={<PromoterLogin token={token} />}
+          />
         </Routes>
       </Router>
     </div>

@@ -27,6 +27,7 @@ const Header = ({
   const [hasSelectedDates, setHasSelectedDates] = useState(false);
   const [selectedDateString, setSelectedDateString] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConnectedModal, setIsConnectedModal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -148,6 +149,7 @@ const Header = ({
       console.log("Utilisateur connecté :", response.data.token);
 
       handleModalClose();
+      navigate("/promoter/login");
     } catch (error) {
       console.log(error.message);
       // Gérez les erreurs ici
@@ -156,13 +158,18 @@ const Header = ({
   };
 
   const handleModalOpen = () => {
-    setIsModalOpen(true);
+    if (isLoggedIn) {
+      setIsConnectedModal(true);
+    } else {
+      setIsModalOpen(true);
+    }
     setEmail("");
     setPassword("");
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    setIsConnectedModal(false);
     setEmail("");
     setPassword("");
   };
@@ -180,6 +187,18 @@ const Header = ({
       document.removeEventListener("click", handleClickOutsideModal);
     };
   });
+  const handleLogout = () => {
+    // Effectuez les actions nécessaires pour déconnecter l'utilisateur
+    // Par exemple, réinitialisez les états, supprimez le token, etc.
+    setIsLoggedIn(false);
+    handleToken(""); // Réinitialisez le token en le passant à une chaîne vide ou à null
+  };
+
+  const handleProfile = () => {
+    // Effectuez les actions nécessaires pour rediriger l'utilisateur vers son espace personnel
+    // Par exemple, utilisez la fonction de navigation fournie par "useNavigate" pour rediriger vers la page du profil de l'utilisateur
+    navigate("/promoter/login"); // Remplacez "/profile" par l'URL de la page de profil de l'utilisateur
+  };
 
   return (
     <div className="header-container">
@@ -240,7 +259,15 @@ const Header = ({
           />
         )}
       </div>
-
+      {isConnectedModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2 className="modal-title">User Options</h2>
+            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleProfile}>My Profile</button>
+          </div>
+        </div>
+      )}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
