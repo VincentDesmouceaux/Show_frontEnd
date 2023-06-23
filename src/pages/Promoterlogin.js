@@ -3,7 +3,7 @@ import axios from "axios";
 
 const PromoterLogin = ({ token }) => {
   console.log(token);
-  const [userData, setUserData] = useState(null);
+  // const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchPromoterProfile = useCallback(async () => {
