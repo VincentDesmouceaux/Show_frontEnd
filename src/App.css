@@ -359,4 +359,7 @@ body {
     margin-top: 20px;
     font-style: italic;
   }
+  .connected {
+    color: green;
+  }
 }

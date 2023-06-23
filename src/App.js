@@ -69,6 +69,14 @@ function App() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      setToken(storedToken);
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <div>
       <Router>
@@ -81,6 +89,8 @@ function App() {
           setDateRange={setDateRange}
           dateRange={dateRange}
           autocompleteRef={autocompleteRef}
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
         />
 
         <Routes>

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import axios from "axios";
 
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../img/showpos.jpeg";
@@ -17,6 +18,8 @@ const Header = ({
   setDateRange,
   dateRange,
   autocompleteRef,
+  isLoggedIn,
+  setIsLoggedIn,
 }) => {
   const calendarRef = useRef(null);
   const navigate = useNavigate();
@@ -124,19 +127,38 @@ const Header = ({
 
   // MODAL
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // Effectuez les actions nécessaires avec les valeurs email et password
-    // par exemple, vous pouvez les afficher dans la console pour le moment
-    console.log("Email:", email);
-    console.log("Password:", password);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/promoter/login",
+        {
+          email,
+          password,
+        }
+      );
 
-    handleModalClose();
+      // Gérez la réponse du serveur ici
+      // Par exemple, vous pouvez stocker le token dans les cookies et effectuer les actions nécessaires
+      // En utilisant la fonction handleToken fournie dans les props du composant Header
+      handleToken(response.data.token);
+      setIsLoggedIn(true);
+
+      console.log("Utilisateur connecté :", response.data.token);
+
+      handleModalClose();
+    } catch (error) {
+      console.log(error.message);
+      // Gérez les erreurs ici
+      // Par exemple, affichez un message d'erreur à l'utilisateur
+    }
   };
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
+    setEmail("");
+    setPassword("");
   };
 
   const handleModalClose = () => {
@@ -174,6 +196,7 @@ const Header = ({
             <FontAwesomeIcon
               icon="fa-solid fa-user-gear"
               onClick={handleModalOpen}
+              className={isLoggedIn ? "connected" : ""}
             />
             <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
             <FontAwesomeIcon icon="fa-solid fa-user-large" />
