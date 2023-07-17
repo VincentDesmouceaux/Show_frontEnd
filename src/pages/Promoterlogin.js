@@ -46,17 +46,21 @@ const PromoterLogin = ({ token }) => {
         <p>Loading...</p>
       ) : userData && eventData.length > 0 ? (
         <div>
-          <div>
-            <img src={userData.account.avatar.secure_url} alt="User" />
-            <h1>{userData.account.username}</h1>
+          <div style={{ textAlign: "center" }}>
+            <h1 className="title">{userData.account.username}</h1>
+            <div className="avatar-container">
+              <img src={userData.account.avatar.secure_url} alt="User" />
+            </div>
           </div>
           <div>
-            <h2>Events</h2>
+            <h2 className="title left-align"> My Events :</h2>
             {eventData.map((event) => (
-              <div key={event._id}>
-                <img src={event.image.secure_url} alt="Event" />
+              <div key={event._id} className="event-container-profile">
                 <h3>{event.name}</h3>
-                <p>{event.date}</p>
+                <div className="event-image-container-profile">
+                  <img src={event.image.secure_url} alt="Event" />
+                </div>
+                <p className="event-date-profile">{event.date}</p>
               </div>
             ))}
           </div>
