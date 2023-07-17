@@ -141,9 +141,6 @@ const Header = ({
         }
       );
 
-      // Gérez la réponse du serveur ici
-      // Par exemple, vous pouvez stocker le token dans les cookies et effectuer les actions nécessaires
-      // En utilisant la fonction handleToken fournie dans les props du composant Header
       handleToken(response.data.token);
       setIsLoggedIn(true);
       setToken(response.data.token);
@@ -154,8 +151,6 @@ const Header = ({
       navigate("/promoter/login");
     } catch (error) {
       console.log(error.message);
-      // Gérez les erreurs ici
-      // Par exemple, affichez un message d'erreur à l'utilisateur
     }
   };
 
@@ -190,16 +185,13 @@ const Header = ({
     };
   });
   const handleLogout = () => {
-    // Effectuez les actions nécessaires pour déconnecter l'utilisateur
-    // Par exemple, réinitialisez les états, supprimez le token, etc.
     setIsLoggedIn(false);
-    handleToken(""); // Réinitialisez le token en le passant à une chaîne vide ou à null
+    handleToken("");
+    navigate("/");
   };
 
   const handleProfile = () => {
-    // Effectuez les actions nécessaires pour rediriger l'utilisateur vers son espace personnel
-    // Par exemple, utilisez la fonction de navigation fournie par "useNavigate" pour rediriger vers la page du profil de l'utilisateur
-    navigate("/promoter/login"); // Remplacez "/profile" par l'URL de la page de profil de l'utilisateur
+    navigate("/promoter/login");
   };
 
   return (

@@ -52,15 +52,22 @@ const PromoterLogin = ({ token }) => {
               <img src={userData.account.avatar.secure_url} alt="User" />
             </div>
           </div>
-          <div>
-            <h2 className="title left-align"> My Events :</h2>
+          <div className="left-align">
+            <h2 className="title"> My Events :</h2>
             {eventData.map((event) => (
               <div key={event._id} className="event-container-profile">
                 <h3>{event.name}</h3>
                 <div className="event-image-container-profile">
-                  <img src={event.image.secure_url} alt="Event" />
+                  <img
+                    src={event.image.secure_url}
+                    alt="Event"
+                    className="event-image-profile"
+                  />
                 </div>
-                <p className="event-date-profile">{event.date}</p>
+                <p className="event-date-profile">
+                  {" "}
+                  {new Date(event.date).toLocaleDateString()}
+                </p>
               </div>
             ))}
           </div>
