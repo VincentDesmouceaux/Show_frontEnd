@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 
 const PromoterSignUp = ({ handleToken }) => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleFormSubmit = async (e) => {
+  const handleSignUpSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -42,61 +42,73 @@ const PromoterSignUp = ({ handleToken }) => {
     setAvatar(acceptedFiles[0]);
   };
 
+  const { getRootProps, getInputProps } = useDropzone({ onDrop: handleDrop });
+
   return (
-    <div>
-      <h2>Promoter Sign Up</h2>
-      {errorMessage && <p>{errorMessage}</p>}
-      <form onSubmit={handleFormSubmit}>
-        <Dropzone onDrop={handleDrop}>
-          {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps()} className="dropzone">
-              <input {...getInputProps()} />
-              {avatar ? (
-                <img
-                  src={URL.createObjectURL(avatar)}
-                  alt="Avatar"
-                  className="avatar-preview"
-                />
-              ) : (
-                <p>
-                  Faites glisser et déposez une image ici, ou cliquez pour
-                  sélectionner une image
-                </p>
-              )}
-            </div>
-          )}
-        </Dropzone>
+    <div className="signup-overlay">
+      <div className="signup-content">
+        <h2 className="signup-title">Promoter Sign Up</h2>
+        <button className="signup-close" onClick={() => navigate("/")}>
+          X
+        </button>
+        {errorMessage && <p>{errorMessage}</p>}
+        <form onSubmit={handleSignUpSubmit}>
+          <div className="signup-group signup-dropzone" {...getRootProps()}>
+            <input {...getInputProps()} />
+            {avatar ? (
+              <img
+                src={URL.createObjectURL(avatar)}
+                alt="Avatar"
+                className="signup-avatar-preview"
+              />
+            ) : (
+              <p>
+                Faites glisser et déposez une image ici, ou cliquez pour
+                sélectionner une image
+              </p>
+            )}
+          </div>
 
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+          <div className="signup-group">
+            <label className="signup-label">Username:</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className="signup-input"
+            />
+          </div>
+          <div className="signup-group">
+            <label className="signup-label">Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="signup-input"
+            />
+          </div>
+          <div className="signup-group">
+            <label className="signup-label">Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="signup-input"
+            />
+          </div>
 
-        <button type="submit">Sign Up</button>
-      </form>
+          <button type="submit" className="signup-btn">
+            Sign Up
+          </button>
+        </form>
+        <p className="signup-submodal">
+          Si vous voulez vous connecter en tant que promoteur,{" "}
+          <Link to="/promoter/login">connectez-vous ici</Link>.
+        </p>
+      </div>
     </div>
   );
 };
