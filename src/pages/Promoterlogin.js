@@ -2,12 +2,15 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const PromoterLogin = ({ token }) => {
+const PromoterLogin = ({ token, handleToken }) => {
   const [userData, setUserData] = useState(null);
   const [eventData, setEventData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(!token); // Show the modal if no token is present
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const fetchPromoterProfile = useCallback(async () => {
     try {
@@ -30,7 +33,6 @@ const PromoterLogin = ({ token }) => {
       setEventData(eventsResponse.data);
       setIsLoading(false);
       setUserData(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -41,6 +43,35 @@ const PromoterLogin = ({ token }) => {
       fetchPromoterProfile();
     }
   }, [token, fetchPromoterProfile]);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/promoter/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      console.log("Utilisateur connecté :", response.data.token);
+      handleModalClose();
+      handleToken(response.data.token);
+      fetchPromoterProfile(); // Fetch promoter profile after successful login
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <div>
@@ -67,7 +98,6 @@ const PromoterLogin = ({ token }) => {
                       className="event-image-profile"
                     />
                   </div>
-
                   <p className="event-date-profile">
                     {new Date(event.date).toLocaleDateString()}
                   </p>
@@ -97,6 +127,46 @@ const PromoterLogin = ({ token }) => {
             ) : (
               <p>No events available.</p>
             )}
+          </div>
+        </div>
+      )}
+      {!token && isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2 className="modal-title">Promoter Login</h2>
+            <button className="modal-close" onClick={handleModalClose}>
+              X
+            </button>
+            <form onSubmit={handleFormSubmit}>
+              <div className="form-group">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className="btn-login">
+                Log In
+              </button>
+            </form>
+            <p className="submodal">
+              Don't have an account?{" "}
+              <a href="/promoter/signup" onClick={handleModalClose}>
+                Sign Up
+              </a>
+              .
+            </p>
           </div>
         </div>
       )}

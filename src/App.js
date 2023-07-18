@@ -118,7 +118,7 @@ function App() {
           />
           <Route
             path="/promoter/login"
-            element={<PromoterLogin token={token} />}
+            element={<PromoterLogin token={token} handleToken={handleToken} />}
           />
         </Routes>
       </Router>
