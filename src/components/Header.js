@@ -188,9 +188,11 @@ const Header = ({
     setIsLoggedIn(false);
     handleToken("");
     navigate("/");
+    handleModalClose();
   };
 
   const handleProfile = () => {
+    handleModalClose();
     navigate("/promoter/login");
   };
 
@@ -257,8 +259,16 @@ const Header = ({
         <div className="modal-overlay">
           <div className="modal-content">
             <h2 className="modal-title">User Options</h2>
-            <button onClick={handleLogout}>Logout</button>
-            <button onClick={handleProfile}>My Profile</button>
+            <button
+              className="btn-login"
+              onClick={handleLogout}
+              style={{ marginRight: "10px" }}
+            >
+              Logout
+            </button>
+            <button className="btn-login" onClick={handleProfile}>
+              My Profile
+            </button>
           </div>
         </div>
       )}

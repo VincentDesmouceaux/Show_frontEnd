@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const PromoterLogin = ({ token }) => {
   console.log(token);
   const [userData, setUserData] = useState(null);
   const [eventData, setEventData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const fetchPromoterProfile = useCallback(async () => {
     try {
@@ -56,7 +59,7 @@ const PromoterLogin = ({ token }) => {
             <h2 className="title"> My Events :</h2>
             {eventData.map((event) => (
               <div key={event._id} className="event-container-profile">
-                <h3>{event.name}</h3>
+                <h3 style={{ marginBottom: "10px" }}>{event.name}</h3>
                 <div className="event-image-container-profile">
                   <img
                     src={event.image.secure_url}
@@ -64,10 +67,32 @@ const PromoterLogin = ({ token }) => {
                     className="event-image-profile"
                   />
                 </div>
+
                 <p className="event-date-profile">
                   {" "}
                   {new Date(event.date).toLocaleDateString()}
                 </p>
+                <FontAwesomeIcon
+                  icon="fa-solid fa-pen-to-square"
+                  style={{
+                    marginTop: "10px",
+                    color: isHovered ? "red" : "",
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={() => {
+                    setIsHovered(true);
+                    setShowTooltip(true);
+                  }}
+                  onMouseLeave={() => {
+                    setIsHovered(false);
+                    setShowTooltip(false);
+                  }}
+                />
+                {showTooltip && (
+                  <div className="tooltip">
+                    <span>Modifier l'event ?</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
