@@ -304,7 +304,11 @@ const Header = ({
             </form>
             <p className="submodal">
               Si vous voulez créer un événement et que vous n'avez pas encore de
-              compte, inscrivez-vous ici.
+              compte,{" "}
+              <Link to="/promoter/signup" onClick={handleModalClose}>
+                inscrivez-vous ici
+              </Link>
+              .
             </p>
           </div>
         </div>

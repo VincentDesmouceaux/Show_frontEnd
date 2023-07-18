@@ -112,7 +112,10 @@ function App() {
             path="/event/:id"
             element={<Event isLoggedIn={isLoggedIn} />}
           />
-          {/* <Route path="/promoter/signup" element={<PromoterSignUp />} /> */}
+          <Route
+            path="/promoter/signup"
+            element={<PromoterSignUp handleToken={handleToken} />}
+          />
           <Route
             path="/promoter/login"
             element={<PromoterLogin token={token} />}
