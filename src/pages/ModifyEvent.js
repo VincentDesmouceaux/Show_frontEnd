@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
+import { Audio } from "react-loader-spinner";
 
 const ModifyEvent = ({ isLoggedIn, token }) => {
   const { id } = useParams();
@@ -72,14 +73,27 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
   const { getRootProps, getInputProps } = useDropzone({ onDrop: handleDrop });
 
   return (
-    <div>
+    <div className="eventid-container">
       {isLoading ? (
-        <p>Loading...</p>
+        <Audio
+          height="80"
+          width="80"
+          radius="9"
+          color="skyblue"
+          ariaLabel="loading"
+        />
       ) : (
         <div>
-          <h2>Modify Event</h2>
-          <form onSubmit={handleFormSubmit}>
-            <div>
+          <h2 className="event-title">Modify Event</h2>
+          <div className="event-image-container">
+            <img
+              src={eventData.image.url}
+              alt={eventData.name}
+              className="event-image-modify"
+            />
+          </div>
+          <form className="event-form" onSubmit={handleFormSubmit}>
+            <div className="form-group">
               <label>Name:</label>
               <input
                 type="text"
@@ -88,7 +102,7 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label>Date:</label>
               <input
                 type="date"
@@ -97,7 +111,7 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label>Orchestre Quantity:</label>
               <input
                 type="number"
@@ -106,7 +120,7 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label>Orchestre Price:</label>
               <input
                 type="number"
@@ -115,7 +129,7 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label>Mezzanine Quantity:</label>
               <input
                 type="number"
@@ -124,7 +138,7 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label>Mezzanine Price:</label>
               <input
                 type="number"
@@ -133,19 +147,15 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label>Image:</label>
-              <div {...getRootProps()}>
+              <div className="dropzone" {...getRootProps()}>
                 <input {...getInputProps()} />
                 {imageFile ? (
                   <img
                     src={URL.createObjectURL(imageFile)}
-                    alt="Event Image"
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      objectFit: "cover",
-                    }}
+                    alt="Event"
+                    className="event-image-modify"
                   />
                 ) : (
                   <p>
@@ -155,7 +165,9 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
                 )}
               </div>
             </div>
-            <button type="submit">Save Changes</button>
+            <button type="submit" className="submit-modify">
+              Save Changes
+            </button>
           </form>
         </div>
       )}

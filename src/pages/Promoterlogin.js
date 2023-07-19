@@ -143,30 +143,36 @@ const PromoterLogin = ({ token, handleToken }) => {
                   <p className="event-date-profile">
                     {new Date(event.date).toLocaleDateString()}
                   </p>
-                  <FontAwesomeIcon
-                    icon="fa-solid fa-pen-to-square"
-                    style={{
-                      marginTop: "10px",
-                      color: isHovered ? "red" : "",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={() => {
-                      setIsHovered(true);
-                      setShowTooltip(true);
-                    }}
-                    onMouseLeave={() => {
-                      setIsHovered(false);
-                      setShowTooltip(false);
-                    }}
-                    onClick={() =>
-                      navigate(`/promoter/event/modify/${event._id}`)
-                    }
-                  />
-                  {showTooltip && (
-                    <div className="tooltip">
-                      <span>Modifier l'événement ?</span>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-pen-to-square"
+                        style={{
+                          marginTop: "10px",
+
+                          color: isHovered ? "red" : "",
+                          cursor: "pointer",
+                        }}
+                        onMouseEnter={() => {
+                          setIsHovered(true);
+                          setShowTooltip(true);
+                        }}
+                        onMouseLeave={() => {
+                          setIsHovered(false);
+                          setShowTooltip(false);
+                        }}
+                        onClick={() =>
+                          navigate(`/promoter/event/modify/${event._id}`)
+                        }
+                      />
+                      {showTooltip && (
+                        <div className="tooltip">
+                          <span>Modifier l'événement ?</span>
+                        </div>
+                      )}
                     </div>
-                  )}
+                    <FontAwesomeIcon icon="fa-solid fa-trash" />
+                  </div>
                 </div>
               ))
             ) : (

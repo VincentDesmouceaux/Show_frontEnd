@@ -22,6 +22,7 @@ import {
   faCartShopping,
   faUserGear,
   faPenToSquare,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -33,7 +34,8 @@ library.add(
   faTicket,
   faCartShopping,
   faUserGear,
-  faPenToSquare
+  faPenToSquare,
+  faTrash
 );
 
 function App() {

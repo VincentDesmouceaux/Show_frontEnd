@@ -515,4 +515,34 @@ body {
     font-size: 15px;
     margin-top: 10px;
   }
+
+  .dropzone {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .dropzone p {
+    font-size: 14px;
+    margin: 0;
+    color: #888;
+  }
+  .event-image-modify {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+  .submit-modify {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
 }
