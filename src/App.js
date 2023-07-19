@@ -9,6 +9,7 @@ import Event from "./pages/Event";
 import PromoterLogin from "./pages/Promoterlogin";
 import PromoterSignUp from "./pages/Promotersingup";
 import Header from "./components/Header";
+import ModifyEvent from "./pages/ModifyEvent";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -119,6 +120,10 @@ function App() {
           <Route
             path="/promoter/login"
             element={<PromoterLogin token={token} handleToken={handleToken} />}
+          />
+          <Route
+            path="/promoter/event/modify/:id"
+            element={<ModifyEvent isLoggedIn={isLoggedIn} />}
           />
         </Routes>
       </Router>

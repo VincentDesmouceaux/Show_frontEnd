@@ -213,8 +213,11 @@ const Header = ({
               onClick={handleModalOpen}
               className={isLoggedIn ? "connected" : ""}
             />
-            <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
-            <FontAwesomeIcon icon="fa-solid fa-user-large" />
+            <FontAwesomeIcon
+              icon="fa-solid fa-cart-shopping"
+              className="custom-icon"
+            />
+            <FontAwesomeIcon icon="fa-solid fa-user" className="custom-icon" />
           </div>
         </div>
       </div>

@@ -158,6 +158,9 @@ const PromoterLogin = ({ token, handleToken }) => {
                       setIsHovered(false);
                       setShowTooltip(false);
                     }}
+                    onClick={() =>
+                      navigate(`/promoter/event/modify/${event._id}`)
+                    }
                   />
                   {showTooltip && (
                     <div className="tooltip">

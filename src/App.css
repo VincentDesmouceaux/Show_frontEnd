@@ -81,24 +81,29 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-    font-size: 24px; /* Augmenter la taille des icônes */
+    font-size: 24px;
     margin-right: 10px;
     justify-content: flex-end;
     margin-left: auto;
     position: relative;
   }
   .header-icons-container {
-    width: 0; /* Ajustez la largeur selon vos besoins */
+    width: 0;
   }
 
   .header-icons > * {
-    height: 32px; /* Ajuster la hauteur des icônes */
-    width: 32px; /* Ajuster la largeur des icônes */
+    height: 32px;
+    width: 32px;
   }
   .header-icons > *:hover {
-    opacity: 0.8; /* Rend les icônes moins opaques lors du survol */
+    opacity: 0.8;
     cursor: pointer;
   }
+  .custom-icon {
+    height: 27px;
+    width: 27px;
+  }
+
   .logo-container {
     flex-grow: 1;
     display: flex;
