@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -8,9 +9,10 @@ const PromoterLogin = ({ token, handleToken }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(!token); // Show the modal if no token is present
+  const [isModalOpen, setIsModalOpen] = useState(!token);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const fetchPromoterProfile = useCallback(async () => {
     try {
@@ -34,6 +36,7 @@ const PromoterLogin = ({ token, handleToken }) => {
       setIsLoading(false);
       setUserData(response.data);
     } catch (error) {
+      setIsLoading(false);
       console.log(error.message);
     }
   }, [token]);
@@ -41,15 +44,14 @@ const PromoterLogin = ({ token, handleToken }) => {
   useEffect(() => {
     if (token) {
       fetchPromoterProfile();
+    } else {
+      setIsLoading(false);
     }
   }, [token, fetchPromoterProfile]);
 
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-
   const handleModalClose = () => {
     setIsModalOpen(false);
+    navigate("/");
   };
 
   const handleFormSubmit = async (event) => {
@@ -67,7 +69,8 @@ const PromoterLogin = ({ token, handleToken }) => {
       console.log("Utilisateur connecté :", response.data.token);
       handleModalClose();
       handleToken(response.data.token);
-      fetchPromoterProfile(); // Fetch promoter profile after successful login
+      fetchPromoterProfile();
+      navigate("/promoter/profile");
     } catch (error) {
       console.log(error.message);
     }
@@ -75,9 +78,48 @@ const PromoterLogin = ({ token, handleToken }) => {
 
   return (
     <div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
+      {!token && isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2 className="modal-title">Promoter Login</h2>
+            <button className="modal-close" onClick={handleModalClose}>
+              X
+            </button>
+            <form onSubmit={handleFormSubmit}>
+              <div className="form-group">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className="btn-login">
+                Log In
+              </button>
+            </form>
+            <p className="submodal">
+              Si vous voulez créer un événement et que vous n'avez pas encore de
+              compte,{" "}
+              <Link to="/promoter/signup" onClick={handleModalClose}>
+                inscrivez-vous ici
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+      )}
+      {!isLoading && token && userData ? (
         <div>
           <div style={{ textAlign: "center" }}>
             <h1 className="title">{userData?.account?.username}</h1>
@@ -129,47 +171,7 @@ const PromoterLogin = ({ token, handleToken }) => {
             )}
           </div>
         </div>
-      )}
-      {!token && isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2 className="modal-title">Promoter Login</h2>
-            <button className="modal-close" onClick={handleModalClose}>
-              X
-            </button>
-            <form onSubmit={handleFormSubmit}>
-              <div className="form-group">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <button type="submit" className="btn-login">
-                Log In
-              </button>
-            </form>
-            <p className="submodal">
-              Don't have an account?{" "}
-              <a href="/promoter/signup" onClick={handleModalClose}>
-                Sign Up
-              </a>
-              .
-            </p>
-          </div>
-        </div>
-      )}
+      ) : null}
     </div>
   );
 };
