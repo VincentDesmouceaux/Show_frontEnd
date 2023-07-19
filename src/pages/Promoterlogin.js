@@ -8,7 +8,8 @@ const PromoterLogin = ({ token, handleToken }) => {
   const [eventData, setEventData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [isHoveredTrash, setIsHoveredTrash] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(!token);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -144,34 +145,53 @@ const PromoterLogin = ({ token, handleToken }) => {
                     {new Date(event.date).toLocaleDateString()}
                   </p>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <div style={{ marginRight: "10px" }}>
+                    <div style={{ marginRight: "10px", position: "relative" }}>
                       <FontAwesomeIcon
                         icon="fa-solid fa-pen-to-square"
                         style={{
                           marginTop: "10px",
 
-                          color: isHovered ? "red" : "",
+                          color: isHovered === event._id ? "red" : "",
                           cursor: "pointer",
                         }}
                         onMouseEnter={() => {
-                          setIsHovered(true);
-                          setShowTooltip(true);
+                          setIsHovered(event._id);
                         }}
                         onMouseLeave={() => {
-                          setIsHovered(false);
-                          setShowTooltip(false);
+                          setIsHovered(null);
                         }}
                         onClick={() =>
                           navigate(`/promoter/event/modify/${event._id}`)
                         }
                       />
-                      {showTooltip && (
-                        <div className="tooltip">
+                      {isHovered === event._id && (
+                        <div
+                          className="tooltip"
+                          style={{
+                            position: "absolute",
+                            left: "100%",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            backgroundColor: "rgba(0, 0, 0, 0.8)",
+                            color: "#fff",
+                            padding: "6px 10px",
+                            borderRadius: "4px",
+                          }}
+                        >
                           <span>Modifier l'événement ?</span>
                         </div>
                       )}
                     </div>
-                    <FontAwesomeIcon icon="fa-solid fa-trash" />
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-trash"
+                      style={{
+                        marginTop: "8px",
+                        color: isHoveredTrash ? "red" : "",
+                        cursor: "pointer",
+                      }}
+                      onMouseEnter={() => setIsHoveredTrash(true)}
+                      onMouseLeave={() => setIsHoveredTrash(false)}
+                    />
                   </div>
                 </div>
               ))
