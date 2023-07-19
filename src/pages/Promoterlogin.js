@@ -69,8 +69,8 @@ const PromoterLogin = ({ token, handleToken }) => {
       console.log("Utilisateur connecté :", response.data.token);
       handleModalClose();
       handleToken(response.data.token);
-      fetchPromoterProfile();
-      navigate("/promoter/profile");
+
+      navigate("/promoter/login");
     } catch (error) {
       console.log(error.message);
     }
