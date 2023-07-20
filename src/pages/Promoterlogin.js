@@ -182,16 +182,35 @@ const PromoterLogin = ({ token, handleToken }) => {
                         </div>
                       )}
                     </div>
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-trash"
-                      style={{
-                        marginTop: "8px",
-                        color: isHoveredTrash ? "red" : "",
-                        cursor: "pointer",
-                      }}
-                      onMouseEnter={() => setIsHoveredTrash(true)}
-                      onMouseLeave={() => setIsHoveredTrash(false)}
-                    />
+                    <div style={{ position: "relative" }}>
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-trash"
+                        style={{
+                          marginTop: "9px",
+                          color: isHoveredTrash === event._id ? "red" : "",
+                          cursor: "pointer",
+                        }}
+                        onMouseEnter={() => setIsHoveredTrash(event._id)}
+                        onMouseLeave={() => setIsHoveredTrash(null)}
+                      />
+                      {isHoveredTrash === event._id && (
+                        <div
+                          className="tooltip"
+                          style={{
+                            position: "absolute",
+                            left: "100%",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            backgroundColor: "rgba(0, 0, 0, 0.8)",
+                            color: "#fff",
+                            padding: "6px 10px",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <span>Supprimer l'événement ?</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))
