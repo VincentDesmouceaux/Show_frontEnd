@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import CreateEventForm from "../components/CreateEventForm";
+
 const PromoterLogin = ({ token, handleToken }) => {
   const [userData, setUserData] = useState(null);
   const [eventData, setEventData] = useState([]);
@@ -176,6 +178,7 @@ const PromoterLogin = ({ token, handleToken }) => {
                             color: "#fff",
                             padding: "6px 10px",
                             borderRadius: "4px",
+                            zIndex: 1,
                           }}
                         >
                           <span>Modifier l'événement ?</span>
@@ -218,6 +221,10 @@ const PromoterLogin = ({ token, handleToken }) => {
               <p>No events available.</p>
             )}
           </div>
+          <CreateEventForm
+            token={token}
+            fetchPromoterProfile={fetchPromoterProfile}
+          />
         </div>
       ) : null}
     </div>
