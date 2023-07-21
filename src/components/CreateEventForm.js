@@ -53,7 +53,6 @@ const CreateEventForm = ({ token, fetchPromoterProfile }) => {
 
   return (
     <div>
-      <h2>Create Event</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
           <input
