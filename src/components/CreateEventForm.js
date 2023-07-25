@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useDropzone } from "react-dropzone";
 
 const CreateEventForm = ({ token, fetchPromoterProfile }) => {
   const [date, setDate] = useState("");
@@ -25,7 +26,10 @@ const CreateEventForm = ({ token, fetchPromoterProfile }) => {
       const formData = new FormData();
       formData.append("date", date);
       formData.append("name", name);
-      formData.append("image", image);
+      if (image) {
+        formData.append("image", image);
+      }
+
       formData.append("seats[orchestre][quantity]", orchestreQuantity);
       formData.append("seats[orchestre][price]", orchestrePrice);
       formData.append("seats[mezzanine][quantity]", mezzanineQuantity);
@@ -43,7 +47,7 @@ const CreateEventForm = ({ token, fetchPromoterProfile }) => {
       );
 
       console.log("Event created:", response.data.event);
-      fetchPromoterProfile(); // Fetch the updated promoter profile after event creation.
+      fetchPromoterProfile();
       setIsLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -51,10 +55,38 @@ const CreateEventForm = ({ token, fetchPromoterProfile }) => {
     }
   };
 
+  const handleDrop = (acceptedFiles) => {
+    setImage(acceptedFiles[0]);
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: handleDrop,
+  });
+
   return (
     <div>
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
+          <label>Event Image:</label>
+          <div className="dropzone" {...getRootProps()}>
+            <input {...getInputProps()} />
+            {image ? (
+              <img
+                src={URL.createObjectURL(image)}
+                alt="Event"
+                className="event-image-create"
+              />
+            ) : (
+              <p>
+                Drag and drop an image here or click to select an image
+                (accepted formats: jpg, jpeg, png, gif)
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Date:</label>
           <input
             type="date"
             placeholder="Date"
@@ -64,6 +96,7 @@ const CreateEventForm = ({ token, fetchPromoterProfile }) => {
           />
         </div>
         <div className="form-group">
+          <label>Name:</label>
           <input
             type="text"
             placeholder="Event Name"
@@ -72,14 +105,7 @@ const CreateEventForm = ({ token, fetchPromoterProfile }) => {
             required
           />
         </div>
-        <div className="form-group">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-            required
-          />
-        </div>
+
         <div className="form-group">
           <label>Orchestre Seats Quantity:</label>
           <input
@@ -116,7 +142,7 @@ const CreateEventForm = ({ token, fetchPromoterProfile }) => {
             required
           />
         </div>
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className="submit-modify" disabled={isLoading}>
           Create Event
         </button>
       </form>

@@ -125,7 +125,7 @@ function App() {
           />
           <Route
             path="/promoter/event/modify/:id"
-            element={<ModifyEvent isLoggedIn={isLoggedIn} />}
+            element={<ModifyEvent isLoggedIn={isLoggedIn} token={token} />}
           />
         </Routes>
       </Router>

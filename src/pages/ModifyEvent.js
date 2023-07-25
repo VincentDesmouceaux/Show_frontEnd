@@ -22,6 +22,7 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
     const fetchEvent = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/events/${id}`);
+
         setEventData(response.data);
         setName(response.data.name);
         setDate(response.data.date);
@@ -42,13 +43,27 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    const eventData = {
+      name,
+      date,
+      seats: {
+        orchestre: {
+          quantity: orchestreQuantity,
+          price: orchestrePrice,
+        },
+        mezzanine: {
+          quantity: mezzanineQuantity,
+          price: mezzaninePrice,
+        },
+      },
+    };
+
+    if (imageFile) {
+      eventData.image = imageFile;
+    }
+
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("date", date);
-    formData.append("orchestre.quantity", orchestreQuantity);
-    formData.append("orchestre.price", orchestrePrice);
-    formData.append("mezzanine.quantity", mezzanineQuantity);
-    formData.append("mezzanine.price", mezzaninePrice);
+    formData.append("data", JSON.stringify(eventData));
     if (imageFile) {
       formData.append("image", imageFile);
     }
@@ -106,7 +121,7 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
               <label>Date:</label>
               <input
                 type="date"
-                value={date}
+                value={date ? new Date(date).toISOString().split("T")[0] : ""}
                 onChange={(e) => setDate(e.target.value)}
                 required
               />
