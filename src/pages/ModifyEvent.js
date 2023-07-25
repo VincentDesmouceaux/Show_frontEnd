@@ -1,6 +1,6 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { Audio } from "react-loader-spinner";
 
@@ -43,27 +43,27 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const eventData = {
+    const eventDataToUpdate = {
       name,
       date,
-      seats: {
-        orchestre: {
-          quantity: orchestreQuantity,
-          price: orchestrePrice,
-        },
-        mezzanine: {
-          quantity: mezzanineQuantity,
-          price: mezzaninePrice,
-        },
+      orchestre: {
+        quantity: orchestreQuantity,
+        price: orchestrePrice,
+      },
+      mezzanine: {
+        quantity: mezzanineQuantity,
+        price: mezzaninePrice,
       },
     };
 
-    if (imageFile) {
-      eventData.image = imageFile;
-    }
-
     const formData = new FormData();
-    formData.append("data", JSON.stringify(eventData));
+    formData.append("name", name);
+    formData.append("date", date);
+    formData.append("orchestre.quantity", orchestreQuantity);
+    formData.append("orchestre.price", orchestrePrice);
+    formData.append("mezzanine.quantity", mezzanineQuantity);
+    formData.append("mezzanine.price", mezzaninePrice);
+
     if (imageFile) {
       formData.append("image", imageFile);
     }
