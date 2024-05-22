@@ -43,18 +43,18 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const eventDataToUpdate = {
-      name,
-      date,
-      orchestre: {
-        quantity: orchestreQuantity,
-        price: orchestrePrice,
-      },
-      mezzanine: {
-        quantity: mezzanineQuantity,
-        price: mezzaninePrice,
-      },
-    };
+    // const eventDataToUpdate = {
+    //   name,
+    //   date,
+    //   orchestre: {
+    //     quantity: orchestreQuantity,
+    //     price: orchestrePrice,
+    //   },
+    //   mezzanine: {
+    //     quantity: mezzanineQuantity,
+    //     price: mezzaninePrice,
+    //   },
+    // };
 
     const formData = new FormData();
     formData.append("name", name);
