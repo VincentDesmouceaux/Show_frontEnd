@@ -21,7 +21,7 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/events/${id}`);
+        const response = await axios.get(`http://site--show-backend--5rcbdjs6tgqv.code.run/events/${id}`);
 
         setEventData(response.data);
         setName(response.data.name);
@@ -69,7 +69,7 @@ const ModifyEvent = ({ isLoggedIn, token }) => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/event/modify/${id}`, formData, {
+      await axios.put(`http://site--show-backend--5rcbdjs6tgqv.code.run/event/modify/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

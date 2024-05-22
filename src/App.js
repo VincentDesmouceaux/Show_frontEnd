@@ -64,7 +64,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/events`);
+        const response = await axios.get(`http://site--show-backend--5rcbdjs6tgqv.code.run/events`);
         setData(response.data);
       } catch (error) {
         console.log(error.message);

@@ -20,7 +20,7 @@ const PromoterLogin = ({ token, handleToken }) => {
   const fetchPromoterProfile = useCallback(async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/promoter/profile",
+        "http://site--show-backend--5rcbdjs6tgqv.code.run/promoter/profile",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -28,7 +28,7 @@ const PromoterLogin = ({ token, handleToken }) => {
         }
       );
       const eventsResponse = await axios.get(
-        "http://localhost:3000/promoter/events",
+        "http://site--show-backend--5rcbdjs6tgqv.code.run/promoter/events",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ const PromoterLogin = ({ token, handleToken }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/promoter/login",
+        "http://site--show-backend--5rcbdjs6tgqv.code.run/promoter/login",
         {
           email,
           password,

@@ -23,7 +23,7 @@ const Home = ({
           ? dateRange.endDate.toISOString().split("T")[0]
           : "";
         const response = await axios.get(
-          `http://localhost:3000/events?startDate=${startDate}&endDate=${endDate}&name=${search}`
+          `http://site--show-backend--5rcbdjs6tgqv.code.run/events?startDate=${startDate}&endDate=${endDate}&name=${search}`
         );
         console.log("Response:", response.data);
         setFilteredEvents(response.data);

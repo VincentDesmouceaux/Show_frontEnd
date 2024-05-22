@@ -36,7 +36,7 @@ const CreateEventForm = ({ token, fetchPromoterProfile }) => {
       formData.append("seats[mezzanine][price]", mezzaninePrice);
 
       const response = await axios.post(
-        "http://localhost:3000/events/create",
+        "http://site--show-backend--5rcbdjs6tgqv.code.run/events/create",
         formData,
         {
           headers: {

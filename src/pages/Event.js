@@ -14,7 +14,7 @@ const Event = ({ isLoggedIn }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/events/" + id);
+        const response = await axios.get("http://site--show-backend--5rcbdjs6tgqv.code.run/events/" + id);
 
         setData(response.data);
         setIsLoading(false);

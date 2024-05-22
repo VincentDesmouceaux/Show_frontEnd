@@ -22,7 +22,7 @@ const PromoterSignUp = ({ handleToken }) => {
       formData.append("avatar", avatar);
 
       const response = await axios.post(
-        "http://localhost:3000/promoter/signup",
+        "http://site--show-backend--5rcbdjs6tgqv.code.run/promoter/signup",
         formData,
         {
           headers: {
